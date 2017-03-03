@@ -32,6 +32,7 @@ GRAD Persistence is multiplayer and JIP proof.
 	- [grad_persistence_fnc_saveVehicles](#gradpersistencefncsavevehicles)
 	- [grad_persistence_fnc_saveStatics](#gradpersistencefncsavestatics)
 	- [grad_persistence_fnc_savePlayer](#gradpersistencefncsaveplayer)
+	- [grad_persistence_fnc_clearMissionData](#gradpersistencefncclearmissiondata)
 
 <!-- /TOC -->
 
@@ -76,9 +77,9 @@ saveUnits           | 1             | Toggles saving of AI units. 0 to disable, 
 saveVehicles        | 1             | Toggles saving of vehicles, static weapons, containers (i.e. ammoboxes), certain objects. 0,1,2 same as `saveUnits`
 saveStatics         | 1             | Toggles saving of static objects such as houses, walls, trees, etc. 0,1,2 same as `saveUnits`
 savePlayerInventory | 1             | Toggles saving of player inventories. 0 to disable, 1 to enable.
-savePlayerDamage    | 1             | Toggles saving of player health. 0 to disable, 1 to enable.
-savePlayerPosition  | 1             | Toggles saving of player position. 0 to disable, 1 to enable.
-savePlayerMoney     | 1             | Toggles saving of player money. Needs [GRAD ListBuymenu](https://github.com/gruppe-adler/grad-listBuymenu) or [GRAD Moneymenu](https://github.com/gruppe-adler/grad-moneyMenu)
+savePlayerDamage    | 0             | Toggles saving of player health. 0 to disable, 1 to enable.
+savePlayerPosition  | 0             | Toggles saving of player position. 0 to disable, 1 to enable.
+savePlayerMoney     | 0             | Toggles saving of player money. Needs [GRAD ListBuymenu](https://github.com/gruppe-adler/grad-listBuymenu) or [GRAD Moneymenu](https://github.com/gruppe-adler/grad-moneyMenu)
 
 Example:
 
@@ -96,7 +97,7 @@ class CfgGradPersistence {
 ```
 
 # Usage
-There are only two essential functions that you need to use. JIP players are handled automatically.
+There are only two essential functions that you need to use. JIP and disconnecting players are handled automatically.
 
 ## grad_persistence_fnc_saveMission
 Saves the current mission according to configuration. Has to be executed on server. Optionally shows a warning message before saving, so that players can leave their vehicles. (Players that are inside vehicles during saving will spawn dismounted, but inside the vehicle object.)
@@ -144,3 +145,16 @@ Syntax:
 Parameters:  
 * player: Object - The unit you want to save
 * true: Bool - This has to be true. Trust me.
+
+## grad_persistence_fnc_clearMissionData
+Deletes all saved data of a specific missionTag of a specific terrain.
+
+Syntax:  
+`[missionTag,worldName] call grad_persistence_fnc_clearMissionData`
+
+Parameters:  
+* missionTag (optional): String - The mission tag of the mission data that is to be deleted. Defaults to current mission's missionTag.
+* worldName (optional): String - The terrain name (get with command `worldName`) of the mission data that is to be deleted. Defaults name of to currently loaded terrain.
+
+Example:  
+`["my_persistent_mission",Altis] call grad_persistence_fnc_clearMissionData`

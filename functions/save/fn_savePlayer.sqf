@@ -4,7 +4,8 @@ params [
     ["_savePlayerInventory",([missionConfigFile >> "CfgGradPersistence", "savePlayerInventory", 1] call BIS_fnc_returnConfigEntry) == 1],
     ["_savePlayerDamage",([missionConfigFile >> "CfgGradPersistence", "savePlayerDamage", 0] call BIS_fnc_returnConfigEntry) == 1],
     ["_savePlayerPosition",([missionConfigFile >> "CfgGradPersistence", "savePlayerPosition", 0] call BIS_fnc_returnConfigEntry) == 1],
-    ["_savePlayerMoney",([missionConfigFile >> "CfgGradPersistence", "savePlayerMoney", 0] call BIS_fnc_returnConfigEntry) == 1]
+    ["_savePlayerMoney",([missionConfigFile >> "CfgGradPersistence", "savePlayerMoney", 0] call BIS_fnc_returnConfigEntry) == 1],
+    "_uid"
 ];
 
 
@@ -14,7 +15,7 @@ _missionTag = [] call grad_persistence_fnc_getMissionTag;
 _playersTag = _missionTag + "_players";
 _playersDataHash = [_playersTag,true,false] call grad_persistence_fnc_getSaveData;
 
-_uid = getPlayerUID _unit;
+_uid = if (isNil "_uid") then {getPlayerUID _unit} else {_uid};
 if (_uid == "") exitWith {};
 
 _unitDataHash = [[],false] call CBA_fnc_hashCreate;

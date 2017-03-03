@@ -10,6 +10,7 @@ class GRAD_persistence {
         class generateCountArray {};
         class getMissionTag {};
         class getSaveData {};
+        class handleDisconnect {};
         class handleJIP {};
         class initModule {postInit = 1;};
         class showWarningMessage {};
