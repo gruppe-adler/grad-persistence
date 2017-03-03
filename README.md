@@ -16,6 +16,8 @@ Limitations:
 
 GRAD Persistence is multiplayer and JIP proof.
 
+
+### Table of Contents
 <!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:0 orderedList:0 -->
 
 - [Dependencies](#dependencies)
@@ -33,7 +35,7 @@ GRAD Persistence is multiplayer and JIP proof.
 
 <!-- /TOC -->
 
-# Dependencies
+#### Dependencies
 * [CBA_A3](https://github.com/CBATeam/CBA_A3)
 
 # Installation
