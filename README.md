@@ -35,7 +35,7 @@ GRAD Persistence is multiplayer and JIP proof.
 
 <!-- /TOC -->
 
-#### Dependencies
+### Dependencies
 * [CBA_A3](https://github.com/CBATeam/CBA_A3)
 
 # Installation
