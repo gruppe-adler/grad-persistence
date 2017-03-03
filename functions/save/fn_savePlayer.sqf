@@ -3,7 +3,8 @@ params [
     ["_save",false],
     ["_savePlayerInventory",([missionConfigFile >> "CfgGradPersistence", "savePlayerInventory", 1] call BIS_fnc_returnConfigEntry) == 1],
     ["_savePlayerDamage",([missionConfigFile >> "CfgGradPersistence", "savePlayerDamage", 0] call BIS_fnc_returnConfigEntry) == 1],
-    ["_savePlayerPosition",([missionConfigFile >> "CfgGradPersistence", "savePlayerPosition", 0] call BIS_fnc_returnConfigEntry) == 1]
+    ["_savePlayerPosition",([missionConfigFile >> "CfgGradPersistence", "savePlayerPosition", 0] call BIS_fnc_returnConfigEntry) == 1],
+    ["_savePlayerMoney",([missionConfigFile >> "CfgGradPersistence", "savePlayerMoney", 0] call BIS_fnc_returnConfigEntry) == 1]
 ];
 
 
@@ -35,6 +36,10 @@ if (_savePlayerDamage) then {
 if (_savePlayerPosition) then {
     [_unitDataHash,"posASL",getPosASL _unit] call CBA_fnc_hashSet;
     [_unitDataHash,"dir",getDir _unit] call CBA_fnc_hashSet;
+};
+
+if (_savePlayerMoney) then {
+    [_unitDataHash,"money",_unit getVariable ["grad_lbm_myFunds",0]] call CBA_fnc_hashSet;
 };
 
 [_playersDataHash,_uid,_unitDataHash] call CBA_fnc_hashSet;

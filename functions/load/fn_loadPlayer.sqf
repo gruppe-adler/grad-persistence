@@ -8,7 +8,8 @@
         "_unit",
         ["_savePlayerInventory",([missionConfigFile >> "CfgGradPersistence", "savePlayerInventory", 1] call BIS_fnc_returnConfigEntry) == 1],
         ["_savePlayerDamage",([missionConfigFile >> "CfgGradPersistence", "savePlayerDamage", 0] call BIS_fnc_returnConfigEntry) == 1],
-        ["_savePlayerPosition",([missionConfigFile >> "CfgGradPersistence", "savePlayerPosition", 0] call BIS_fnc_returnConfigEntry) == 1]
+        ["_savePlayerPosition",([missionConfigFile >> "CfgGradPersistence", "savePlayerPosition", 0] call BIS_fnc_returnConfigEntry) == 1],
+        ["_savePlayerMoney",([missionConfigFile >> "CfgGradPersistence", "savePlayerMoney", 1] call BIS_fnc_returnConfigEntry) == 1]
     ];
 
     _missionTag = [] call grad_persistence_fnc_getMissionTag;
@@ -45,6 +46,13 @@
         if (!(_unitPosASL isEqualType false) && !(_unitDir isEqualType false)) then {
             _unit setPosASL _unitPosASL;
             _unit setDir _unitDir;
+        };
+    };
+
+    if (_savePlayerMoney) then {
+        _unitMoney = [_unitDataHash,"money"] call CBA_fnc_hashGet;
+        if !(_unitMoney isEqualType false) then {
+            _unit setVariable ["grad_lbm_myFunds",_unitMoney,true];
         };
     };
 

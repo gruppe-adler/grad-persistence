@@ -5,6 +5,7 @@ GRAD Persistence will enable you to save/load:
 * vehicles
 * static objects (including grad-fortifications)
 * player equipment, inventory and health
+* player money (needs grad-listBuymenu or grad-moneyMenu)
 
 ## Limitations
 * magazines stored in containers refill
