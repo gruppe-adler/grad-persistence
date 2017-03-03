@@ -139,7 +139,7 @@ Syntax:
 In case you want to save one specific player, you can use this (already included in grad_persistence_fnc_savePlayer). Has to be executed on server.
 
 Syntax:  
-`[player,true] call grad_persistence_fnc_savePlayer`
+`[somePlayerHere,true] call grad_persistence_fnc_savePlayer`
 
 Parameters:  
 * player: Object - The unit you want to save
