@@ -6,7 +6,7 @@ _vehiclesData = [_vehiclesTag] call grad_persistence_fnc_getSaveData;
 _vehiclesData resize 0;
 
 _allVehicles = vehicles;
-_allVehicles = _allVehicles select {!(_x isKindOf "Static") && {alive _x}};
+_allVehicles = _allVehicles select {!(_x isKindOf "Static") && {alive _x} && {!(_x getVariable ["grad_persistence_isEditorObject",false])}};
 {
     _hitPointDamage = getAllHitPointsDamage _x;
     private _hitNames = [];

@@ -8,7 +8,7 @@ _staticsData resize 0;
 _statics = allMissionObjects "Static";
 
 {
-    if (typeOf _x != "CBA_NamespaceDummy") then {
+    if (typeOf _x != "CBA_NamespaceDummy" && {!(_x getVariable ["grad_persistence_isEditorObject",false])}) then {
 
         _thisStaticHash = [] call CBA_fnc_hashCreate;
         [_thisStaticHash,"type",typeOf _x] call CBA_fnc_hashSet;

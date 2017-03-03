@@ -10,8 +10,10 @@ class GRAD_persistence {
         class generateCountArray {};
         class getMissionTag {};
         class getSaveData {};
-        class handleJIP {postInit = 1;};
+        class handleJIP {};
+        class initModule {postInit = 1;};
         class showWarningMessage {};
+        class tagEditorObjects {};
     };
 
     class load {

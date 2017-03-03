@@ -20,7 +20,7 @@ _allGroups = allGroups;
     _thisUnitsData = _thisGroupData select 1;
 
     {
-        if (!(isPlayer _x) && {!(isNull _x)} && {alive _x} && {vehicle _x == _x}) then {
+        if (!(isPlayer _x) && {!(isNull _x)} && {alive _x} && {vehicle _x == _x} && {!(_x getVariable ["grad_persistence_isEditorObject",false])}) then {
             _thisUnitHash = [] call CBA_fnc_hashCreate;
             [_thisUnitHash,"type",typeOf _x] call CBA_fnc_hashSet;
             [_thisUnitHash,"posASL",getPosASL _x] call CBA_fnc_hashSet;
