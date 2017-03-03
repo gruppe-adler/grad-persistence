@@ -16,30 +16,28 @@ Limitations:
 
 GRAD Persistence is multiplayer and JIP proof.
 
-<!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
+<!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:0 orderedList:0 -->
 
-- [GRAD Persistence](#grad-persistence)
-	- [Dependencies](#dependencies)
-	- [Installation](#installation)
-		- [Manually](#manually)
-		- [Via `npm`](#via-npm)
-- [define MODULES_DIRECTORY node_modules](#define-modulesdirectory-nodemodules)
-	- [Configuration](#configuration)
-	- [Usage](#usage)
-		- [grad_persistence_fnc_saveMission](#gradpersistencefncsavemission)
-		- [grad_persistence_fnc_loadMission](#gradpersistencefncloadmission)
-		- [grad_persistence_fnc_saveGroups](#gradpersistencefncsavegroups)
-		- [grad_persistence_fnc_saveVehicles](#gradpersistencefncsavevehicles)
-		- [grad_persistence_fnc_saveStatics](#gradpersistencefncsavestatics)
-		- [grad_persistence_fnc_savePlayer](#gradpersistencefncsaveplayer)
+- [Dependencies](#dependencies)
+- [Installation](#installation)
+	- [Manually](#manually)
+	- [Via `npm`](#via-npm)
+- [Configuration](#configuration)
+- [Usage](#usage)
+	- [grad_persistence_fnc_saveMission](#gradpersistencefncsavemission)
+	- [grad_persistence_fnc_loadMission](#gradpersistencefncloadmission)
+	- [grad_persistence_fnc_saveGroups](#gradpersistencefncsavegroups)
+	- [grad_persistence_fnc_saveVehicles](#gradpersistencefncsavevehicles)
+	- [grad_persistence_fnc_saveStatics](#gradpersistencefncsavestatics)
+	- [grad_persistence_fnc_savePlayer](#gradpersistencefncsaveplayer)
 
 <!-- /TOC -->
 
-## Dependencies
+# Dependencies
 * [CBA_A3](https://github.com/CBATeam/CBA_A3)
 
-## Installation
-### Manually
+# Installation
+## Manually
 1. Create a folder in your mission root folder and name it `modules`. Then create one inside there and call it `grad-persistence`.
 2. Download the contents of this repository ( there's a download link at the side ) and put it into the directory you just created.
 3. Append the following lines of code to the `description.ext`:
@@ -50,7 +48,7 @@ class CfgFunctions {
 };
 ```
 
-### Via `npm`
+## Via `npm`
 _for details about what npm is and how to use it, look it up on [npmjs.com](https://www.npmjs.com/)_
 
 1. Install package `grad-persistence` : `npm install --save grad-persistence`
@@ -64,7 +62,7 @@ class CfgFunctions {
 };
 ```
 
-## Configuration
+# Configuration
 You can configure this module in your `description.ext`. This is entirely optional however, since every setting has a default value.
 
 Add the class `CfgGradPersistence` to your `description.ext`, then add any of these attributes to configure the module:
@@ -95,10 +93,10 @@ class CfgGradPersistence {
 };
 ```
 
-## Usage
+# Usage
 There are only two essential functions that you need to use. JIP players are handled automatically.
 
-### grad_persistence_fnc_saveMission
+## grad_persistence_fnc_saveMission
 Saves the current mission according to configuration. Has to be executed on server. Optionally shows a warning message before saving, so that players can leave their vehicles. (Players that are inside vehicles during saving will spawn dismounted, but inside the vehicle object.)
 
 Syntax:  
@@ -111,31 +109,31 @@ Parameters:
 Example:  
 `[true,30] call grad_persistence_fnc_saveMission`
 
-### grad_persistence_fnc_loadMission
+## grad_persistence_fnc_loadMission
 Loads the mission that was saved under the `missionTag` defined in `CfgGradPersistence`. Has to be executed on server.
 
 Syntax:  
 `[] call grad_persistence_fnc_loadMission`
 
-### grad_persistence_fnc_saveGroups
+## grad_persistence_fnc_saveGroups
 In case you want to save specifically the AI units, you can use this (already included in grad_persistence_fnc_saveMission). Has to be executed on server.
 
 Syntax:  
 `[] call grad_persistence_fnc_saveGroups`
 
-### grad_persistence_fnc_saveVehicles
+## grad_persistence_fnc_saveVehicles
 In case you want to save specifically all vehicles, you can use this (already included in grad_persistence_fnc_saveMission). Has to be executed on server.
 
 Syntax:  
 `[] call grad_persistence_fnc_saveVehicles`
 
-### grad_persistence_fnc_saveStatics
+## grad_persistence_fnc_saveStatics
 In case you want to save specifically all static objects, you can use this (already included in grad_persistence_fnc_saveMission). Has to be executed on server.
 
 Syntax:  
 `[] call grad_persistence_fnc_saveStatics`
 
-### grad_persistence_fnc_savePlayer
+## grad_persistence_fnc_savePlayer
 In case you want to save one specific player, you can use this (already included in grad_persistence_fnc_savePlayer). Has to be executed on server.
 
 Syntax:  
