@@ -24,15 +24,16 @@ _vehiclesData = [_vehiclesTag] call grad_persistence_fnc_getSaveData;
         _posASL = [_thisVehicleHash,"posASL"] call CBA_fnc_hashGet;
         _vectorDirAndUp = [_thisVehicleHash,"vectorDirAndUp"] call CBA_fnc_hashGet;
         _hitPointDamage = [_thisVehicleHash,"hitpointDamage"] call CBA_fnc_hashGet;
-        
+        _turretMagazines = [_thisVehicleHash,"turretMagazines"] call CBA_fnc_hashGet;
+        _inventory = [_thisVehicleHash,"inventory"] call CBA_fnc_hashGet;
+
         _thisVehicle setVectorDirAndUp _vectorDirAndUp;
         _thisVehicle setPosASL _posASL;
 
-        _hitPointDamage params ["_hitNames","_hitDamages"];
-        {
-            _thisVehicle setHitPointDamage [_x,_hitDamages select _forEachIndex];
-            /*_thisVehicle setHitPointDamage [_x,_hitDamages select _forEachIndex,false];*/   //use this in arma 1.67
-        } forEach _hitNames;
+        [_thisVehicle,_turretMagazines] call grad_persistence_fnc_loadTurretMagazines;
+        [_thisVehicle,_hitPointDamage] call grad_persistence_fnc_loadVehicleHits;
+        [_thisVehicle,_inventory] call grad_persistence_fnc_loadVehicleInventory;
+
     }, [_thisVehicle,_thisVehicleHash]] call CBA_fnc_waitUntilAndExecute;
 
     false
