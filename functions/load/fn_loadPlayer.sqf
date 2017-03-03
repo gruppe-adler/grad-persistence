@@ -1,0 +1,51 @@
+#define PREFIX grad
+#define COMPONENT persistence
+#include "\x\cba\addons\main\script_macros_mission.hpp"
+
+[{!isNull (_this select 0)}, {
+
+    params [
+        "_unit",
+        ["_savePlayerInventory",([missionConfigFile >> "CfgGradPersistence", "savePlayerInventory", 1] call BIS_fnc_returnConfigEntry) == 1],
+        ["_savePlayerDamage",([missionConfigFile >> "CfgGradPersistence", "savePlayerDamage", 0] call BIS_fnc_returnConfigEntry) == 1],
+        ["_savePlayerPosition",([missionConfigFile >> "CfgGradPersistence", "savePlayerPosition", 0] call BIS_fnc_returnConfigEntry) == 1]
+    ];
+
+    _missionTag = [] call grad_persistence_fnc_getMissionTag;
+    _playersTag = _missionTag + "_players";
+    _playersDataHash = [_playersTag,true,false] call grad_persistence_fnc_getSaveData;
+
+    _uid = getPlayerUID _unit;
+    if (_uid == "") exitWith {ERROR_1("UID for player %1 not found.",name _unit)};
+
+    _unitDataHash = [_playersDataHash,_uid] call CBA_fnc_hashGet;
+    if (_unitDataHash isEqualType false) exitWith {INFO_1("Data for player %1 not found.",name _unit)};
+
+    if (_savePlayerInventory) then {
+        _unitLoadout = [_unitDataHash,"inventory"] call CBA_fnc_hashGet;
+        if !(_unitLoadout isEqualType false) then {
+            _unit setUnitLoadout [_unitLoadout,false];
+        };
+    };
+
+    if (_savePlayerDamage) then {
+        _unitHits = [_unitDataHash,"damage"] call CBA_fnc_hashGet;
+        if (!(_unitHits isEqualType false) && {count _unitHits > 0}) then {
+            _unitHits params ["_unitHitNames","_unitHitDamages"];
+            {
+                _unit setHit [_x,_unitHitDamages select _forEachIndex];
+            } forEach _unitHitNames;
+        };
+    };
+
+    if (_savePlayerPosition) then {
+        _unitPosASL = [_unitDataHash,"posASL"] call CBA_fnc_hashGet;
+        _unitDir = [_unitDataHash,"dir"] call CBA_fnc_hashGet;
+
+        if (!(_unitPosASL isEqualType false) && !(_unitDir isEqualType false)) then {
+            _unit setPosASL _unitPosASL;
+            _unit setDir _unitDir;
+        };
+    };
+
+}, _this] call CBA_fnc_waitUntilAndExecute;

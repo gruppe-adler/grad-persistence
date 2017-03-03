@@ -1,10 +1,18 @@
-params ["_tag"];
+params ["_tag",["_isHash",false],["_hashDefault",[]]];
 
-_data = profileNamespace getVariable [_tag,[]];
+private _data = profileNamespace getVariable [_tag,[]];
 if (isNil {profileNamespace getVariable _tag}) then {
-    profileNamespace setVariable [_tag,[]];
+
+    _setData = if (_isHash) then {
+        [[],_hashDefault] call CBA_fnc_hashCreate
+    } else {
+        []
+    };
+
+    profileNamespace setVariable [_tag,_setData];
     saveProfileNamespace;
     _data = profileNamespace getVariable [_tag,[]];
 };
+
 
 _data
