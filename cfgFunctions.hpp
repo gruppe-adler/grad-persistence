@@ -31,6 +31,7 @@ class GRAD_persistence {
     class save {
         file = MODULES_DIRECTORY\grad-persistence\functions\save;
 
+        class deInstanceTFARRadios {};
         class getInventory {};
         class saveGroups {};
         class saveMission {};
