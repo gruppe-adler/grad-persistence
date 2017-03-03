@@ -17,7 +17,7 @@ _allVehicles = _allVehicles select {!(_x isKindOf "Static") && {alive _x}};
     };
 
     _vehicleInventory = [_x] call grad_persistence_fnc_getInventory;
-    
+
     _thisVehicleHash = [] call CBA_fnc_hashCreate;
 
     [_thisVehicleHash,"type",typeOf _x] call CBA_fnc_hashSet;
@@ -28,6 +28,7 @@ _allVehicles = _allVehicles select {!(_x isKindOf "Static") && {alive _x}};
     [_thisVehicleHash,"side",side _x] call CBA_fnc_hashSet;
     [_thisVehicleHash,"turretMagazines", magazinesAllTurrets _x] call CBA_fnc_hashSet;
     [_thisVehicleHash,"inventory", _vehicleInventory] call CBA_fnc_hashSet;
+    [_thisVehicleHash,"isGradFort",!isNil {_x getVariable "grad_fortifications_fortOwner"}] call CBA_fnc_hashSet;
 
     _vehiclesData pushBack _thisVehicleHash;
 

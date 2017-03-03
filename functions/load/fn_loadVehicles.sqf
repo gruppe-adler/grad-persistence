@@ -26,6 +26,7 @@ _vehiclesData = [_vehiclesTag] call grad_persistence_fnc_getSaveData;
         _hitPointDamage = [_thisVehicleHash,"hitpointDamage"] call CBA_fnc_hashGet;
         _turretMagazines = [_thisVehicleHash,"turretMagazines"] call CBA_fnc_hashGet;
         _inventory = [_thisVehicleHash,"inventory"] call CBA_fnc_hashGet;
+        _isGradFort = [_thisVehicleHash,"isGradFort"] call CBA_fnc_hashGet;
 
         _thisVehicle setVectorDirAndUp _vectorDirAndUp;
         _thisVehicle setPosASL _posASL;
@@ -33,6 +34,10 @@ _vehiclesData = [_vehiclesTag] call grad_persistence_fnc_getSaveData;
         [_thisVehicle,_turretMagazines] call grad_persistence_fnc_loadTurretMagazines;
         [_thisVehicle,_hitPointDamage] call grad_persistence_fnc_loadVehicleHits;
         [_thisVehicle,_inventory] call grad_persistence_fnc_loadVehicleInventory;
+
+        if (_isGradFort && {isClass (missionConfigFile >> "CfgFunctions" >> "GRAD_fortifications")}) then {
+            [_thisVehicle,objNull] remoteExec ["grad_fortifications_fnc_initFort",0,true];
+        };
 
     }, [_thisVehicle,_thisVehicleHash]] call CBA_fnc_waitUntilAndExecute;
 
