@@ -12,3 +12,5 @@ _savePlayerDamage = ([missionConfigFile >> "CfgGradPersistence", "savePlayerDama
 _savePlayerPosition = ([missionConfigFile >> "CfgGradPersistence", "savePlayerPosition", 0] call BIS_fnc_returnConfigEntry) == 1;
 _savePlayerMoney = ([missionConfigFile >> "CfgGradPersistence", "savePlayerMoney", 1] call BIS_fnc_returnConfigEntry) == 1;
 if (_savePlayerInventory || _savePlayerDamage || _savePlayerPosition || _savePlayerMoney) then {[_savePlayerInventory,_savePlayerDamage,_savePlayerPosition,_savePlayerMoney] call grad_persistence_fnc_loadAllPlayers};
+
+"grad-persistence: mission loaded" remoteExec ["systemChat",0,false];

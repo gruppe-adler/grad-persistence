@@ -11,6 +11,7 @@ class GRAD_persistence {
         class getMissionTag {};
         class getSaveData {};
         class handleJIP {postInit = 1;};
+        class showWarningMessage {};
     };
 
     class load {
