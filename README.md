@@ -72,7 +72,7 @@ Add the class `CfgGradPersistence` to your `description.ext`, then add any of th
 
 Attribute           | Default Value | Explanation
 --------------------|---------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-missionTag          | missionName   | The tag that everything in this mission will be saved under. Two missions with the same tag on the same terrain overwrite each other. One mission can load the data of a different mission, if they are both saved under the same tag.
+missionTag          | missionName   | The tag that everything in this mission will be saved under. Two missions with the same tag will overwrite each other when saving, even on different terrains. One mission can load the data of a different mission, if they are both saved under the same tag.
 saveUnits           | 1             | Toggles saving of AI units. 0 to disable, 1 to save only units that were not placed in the editor, 2 to save all units
 saveVehicles        | 1             | Toggles saving of vehicles, static weapons, containers (i.e. ammoboxes), certain objects. 0,1,2 same as `saveUnits`
 saveStatics         | 1             | Toggles saving of static objects such as houses, walls, trees, etc. 0,1,2 same as `saveUnits`
@@ -147,14 +147,13 @@ Parameters:
 * true: Bool - This has to be true. Trust me.
 
 ## grad_persistence_fnc_clearMissionData
-Deletes all saved data of a specific missionTag of a specific terrain.
+Deletes all saved data of a specific missionTag.
 
 Syntax:  
-`[missionTag,worldName] call grad_persistence_fnc_clearMissionData`
+`[missionTag] call grad_persistence_fnc_clearMissionData`
 
 Parameters:  
 * missionTag (optional): String - The mission tag of the mission data that is to be deleted. Defaults to current mission's missionTag.
-* worldName (optional): String - The terrain name (get with command `worldName`) of the mission data that is to be deleted. Defaults name of to currently loaded terrain.
 
 Example:  
-`["my_persistent_mission",Altis] call grad_persistence_fnc_clearMissionData`
+`["my_persistent_mission"] call grad_persistence_fnc_clearMissionData`
