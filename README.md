@@ -73,6 +73,8 @@ Add the class `CfgGradPersistence` to your `description.ext`, then add any of th
 Attribute           | Default Value | Explanation
 --------------------|---------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 missionTag          | missionName   | The tag that everything in this mission will be saved under. Two missions with the same tag will overwrite each other when saving, even on different terrains. One mission can load the data of a different mission, if they are both saved under the same tag.
+loadOnMissionStart  | 1				| Toggles automatic loading on start of mission.
+waitCondition       | "true"        | Condition before data will be automatically loaded. Also applies to automatic loading of JIP players.
 saveUnits           | 1             | Toggles saving of AI units. 0 to disable, 1 to save only units that were not placed in the editor, 2 to save all units
 saveVehicles        | 1             | Toggles saving of vehicles, static weapons, containers (i.e. ammoboxes), certain objects. 0,1,2 same as `saveUnits`
 saveStatics         | 1             | Toggles saving of static objects such as houses, walls, trees, etc. 0,1,2 same as `saveUnits`
@@ -86,6 +88,8 @@ Example:
 ```sqf
 class CfgGradPersistence {
     missionTag = "my_persistent_mission";
+	loadOnMissionStart = 1;
+    waitCondition = "true";
     saveUnits = 2;
     saveVehicles = 0;
     saveStatics = 1;

@@ -10,9 +10,12 @@ private _fnc_onPlayerConnected = {
     if (!_didJIP) exitWith {};
     if (_uid == "") exitWith {ERROR_1("Player %1 does not have a UID!?",_name)};
 
-    [{!isNull ([_this] call BIS_fnc_getUnitByUID)}, {
+    _waitCondition = [missionConfigFile >> "CfgGradPersistence", "waitCondition", ""] call BIS_fnc_returnConfigEntry;
+    if (_waitCondition == "") then {_waitCondition = "true"};
+    [{!isNull ([_this select 0] call BIS_fnc_getUnitByUID) && {call compile (_this select 1)}}, {
+        params ["_uid","_waitCondition"];
 
-        _unit = [_this] call BIS_fnc_getUnitByUID;
+        _unit = [_uid] call BIS_fnc_getUnitByUID;
         if !(_unit isKindOf "Man") exitWith {};
 
         _savePlayerInventory = ([missionConfigFile >> "CfgGradPersistence", "savePlayerInventory", 1] call BIS_fnc_returnConfigEntry) == 1;
@@ -24,7 +27,7 @@ private _fnc_onPlayerConnected = {
             INFO_1("Loading JIP player %1",name _unit);
             [_unit,_savePlayerInventory,_savePlayerDamage,_savePlayerPosition,_savePlayerMoney] call grad_persistence_fnc_loadPlayer;
         };
-    }, _uid] call CBA_fnc_waitUntilAndExecute;
+    }, [_uid,_waitCondition]] call CBA_fnc_waitUntilAndExecute;
 };
 
 addMissionEventhandler ["PlayerConnected",_fnc_onPlayerConnected];
