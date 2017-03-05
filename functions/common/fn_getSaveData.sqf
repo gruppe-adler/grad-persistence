@@ -10,7 +10,6 @@ if (isNil {profileNamespace getVariable _tag}) then {
     };
 
     profileNamespace setVariable [_tag,_setData];
-    saveProfileNamespace;
     _data = profileNamespace getVariable [_tag,[]];
 };
 
