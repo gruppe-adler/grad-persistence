@@ -10,7 +10,7 @@ private _fnc_onPlayerConnected = {
     if (!_didJIP) exitWith {};
     if (_uid == "") exitWith {ERROR_1("Player %1 does not have a UID!?",_name)};
 
-    _waitCondition = [missionConfigFile >> "CfgGradPersistence", "waitCondition", ""] call BIS_fnc_returnConfigEntry;
+    _waitCondition = [missionConfigFile >> "CfgGradPersistence", "missionWaitCondition", ""] call BIS_fnc_returnConfigEntry;
     if (_waitCondition == "") then {_waitCondition = "true"};
     [{!isNull ([_this select 0] call BIS_fnc_getUnitByUID) && {call compile (_this select 1)}}, {
         params ["_uid","_waitCondition"];

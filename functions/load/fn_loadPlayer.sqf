@@ -2,9 +2,18 @@
 #define COMPONENT persistence
 #include "\x\cba\addons\main\script_macros_mission.hpp"
 
-[{!isNull (_this select 0)}, {
+private _playerWaitCondition = [missionConfigFile >> "CfgGradPersistence", "playerWaitCondition", ""] call BIS_fnc_returnConfigEntry;
+if (_playerWaitCondition == "") then {_playerWaitCondition = "true"};
 
-    params [
+private _fnc_waitUntil = {
+    _unit = ((_this select 0) select 0);
+    !isNull _unit &&
+    {[_unit,side _unit,typeOf _unit,roleDescription _unit] call compile (_this select 1)}
+};
+
+[_fnc_waitUntil, {
+    params ["_args","_playerWaitCondition"];
+    _args params [
         "_unit",
         ["_savePlayerInventory",([missionConfigFile >> "CfgGradPersistence", "savePlayerInventory", 1] call BIS_fnc_returnConfigEntry) == 1],
         ["_savePlayerDamage",([missionConfigFile >> "CfgGradPersistence", "savePlayerDamage", 0] call BIS_fnc_returnConfigEntry) == 1],
@@ -56,4 +65,4 @@
         };
     };
 
-}, _this] call CBA_fnc_waitUntilAndExecute;
+}, [_this,_playerWaitCondition]] call CBA_fnc_waitUntilAndExecute;
