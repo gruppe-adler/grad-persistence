@@ -108,59 +108,95 @@ There are only two essential functions that you need to use. JIP and disconnecti
 ## grad_persistence_fnc_saveMission
 Saves the current mission according to configuration. Has to be executed on server. Optionally shows a warning message before saving, so that players can leave their vehicles. (Players that are inside vehicles during saving will spawn dismounted, but inside the vehicle object.)
 
-Syntax:  
-`[showWarning, waitTime] call grad_persistence_fnc_saveMission`
+### Syntax  
+`[showWarning, waitTime, area] call grad_persistence_fnc_saveMission`
 
-Parameters:  
-* showWarning (optional): Bool - Show warning message before saving (default: false)  
-* waitTime (optional): Number - If warning message is shown, time in seconds before actual save happens (default: 10)
+| Parameter              | Explanation                                                                   |
+|------------------------|-------------------------------------------------------------------------------|
+| showWarning (optional) | Bool - Show warning message before saving (default: false)                    |
+| waitTime (optional)    | Number - Time in seconds before actual save happens (default: 10)             |
+| area (optional)        | Trigger/Marker/Location/Area-Array - Only save objects that are in this area. |
 
-Example:  
-`[true,30] call grad_persistence_fnc_saveMission`  
-`[] call grad_persistence_fnc_saveMission`
+Area array has the following format:  
+`[center,a,b,angle,isRectangle,c]`
+
+| Parameter              | Explanation                                                |
+|------------------------|------------------------------------------------------------|
+| center                 | Pos2D or Pos3D - Center of area                            |
+| a                      | Number - Radius 1 of area.                                 |
+| b (optional)           | Number - Radius 2 of area. (default: a)                    |
+| angle (optional)       | Number - The angle that this area is rotated. (default: 0) |
+| isRectangle (optional) | Bool - Is this area a rectangle? (default: false)          |
+| c (optional)           | Number - Height of this area. (default: unlimited)         |
+
+### Example
+```sqf
+[true,30] call grad_persistence_fnc_saveMission;
+[false,0,trigger_1] call grad_persistence_fnc_saveMission;
+[false,0,"marker_5"] call grad_persistence_fnc_saveMission;
+[true,10,[[2563,1423],60]] call grad_persistence_fnc_saveMission;
+[true,10,[[534,2421,0],70,100,15,true,200]] call grad_persistence_fnc_saveMission;
+```
 
 ## grad_persistence_fnc_loadMission
 Loads the mission that was saved under the `missionTag` defined in `CfgGradPersistence`. Has to be executed on server.
 
-Syntax:  
+### Syntax  
 `[] call grad_persistence_fnc_loadMission`
 
 ## grad_persistence_fnc_saveGroups
 In case you want to save specifically the AI units, you can use this (already included in grad_persistence_fnc_saveMission). Has to be executed on server.
 
-Syntax:  
-`[] call grad_persistence_fnc_saveGroups`
+### Syntax  
+`[area] call grad_persistence_fnc_saveGroups`
+
+| Parameter       | Explanation                                                                                                                           |
+|-----------------|---------------------------------------------------------------------------------------------------------------------------------------|
+| area (optional) | Trigger/Marker/Location/Area-Array - Only save objects that are in this area. See `grad_persistence_fnc_saveMission` for explanation. |
 
 ## grad_persistence_fnc_saveVehicles
 In case you want to save specifically all vehicles, you can use this (already included in grad_persistence_fnc_saveMission). Has to be executed on server.
 
-Syntax:  
-`[] call grad_persistence_fnc_saveVehicles`
+### Syntax  
+`[area] call grad_persistence_fnc_saveVehicles`
+
+| Parameter       | Explanation                                                                                                                           |
+|-----------------|---------------------------------------------------------------------------------------------------------------------------------------|
+| area (optional) | Trigger/Marker/Location/Area-Array - Only save objects that are in this area. See `grad_persistence_fnc_saveMission` for explanation. |
 
 ## grad_persistence_fnc_saveStatics
 In case you want to save specifically all static objects, you can use this (already included in grad_persistence_fnc_saveMission). Has to be executed on server.
 
-Syntax:  
-`[] call grad_persistence_fnc_saveStatics`
+### Syntax  
+`[area] call grad_persistence_fnc_saveStatics`
+
+| Parameter       | Explanation                                                                                                                           |
+|-----------------|---------------------------------------------------------------------------------------------------------------------------------------|
+| area (optional) | Trigger/Marker/Location/Area-Array - Only save objects that are in this area. See `grad_persistence_fnc_saveMission` for explanation. |
 
 ## grad_persistence_fnc_savePlayer
 In case you want to save one specific player, you can use this (already included in grad_persistence_fnc_savePlayer). Has to be executed on server.
 
-Syntax:  
+### Syntax  
 `[somePlayerHere,true] call grad_persistence_fnc_savePlayer`
 
-Parameters:  
-* player: Object - The unit you want to save
-* true: Bool - This has to be true. Trust me.
+| Parameter | Explanation                           |
+|-----------|---------------------------------------|
+| player    | Object - The unit you want to save.   |
+| true      | Bool - This has to be true. Trust me. |
+
 
 ## grad_persistence_fnc_clearMissionData
 Deletes all saved data of a specific missionTag.
 
-Syntax:  
+### Syntax  
 `[missionTag] call grad_persistence_fnc_clearMissionData`
 
-Parameters:  
-* missionTag (optional): String - The mission tag of the mission data that is to be deleted. Defaults to current mission's missionTag.
+| Parameter | Explanation                           |
+|-----------|---------------------------------------|
+| missionTag (optional)    | String - The mission tag of the mission data that is to be deleted. Defaults to current mission's missionTag.   |
 
-Example:  
-`["my_persistent_mission"] call grad_persistence_fnc_clearMissionData`
+### Example
+```sqf
+["my_persistent_mission"] call grad_persistence_fnc_clearMissionData;
+```
