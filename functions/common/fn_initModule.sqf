@@ -1,3 +1,7 @@
+["savemission", {
+    [true, 10] remoteExec ["grad_persistence_fnc_saveMission",2,false];
+}, "adminLogged"] call CBA_fnc_registerChatCommand;
+
 if (isServer) then {
     [] call grad_persistence_fnc_handleJIP;
     [] call grad_persistence_fnc_handleDisconnect;

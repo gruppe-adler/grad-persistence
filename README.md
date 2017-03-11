@@ -103,7 +103,10 @@ class CfgGradPersistence {
 ```
 
 # Usage
-There are only two essential functions that you need to use. JIP and disconnecting players are handled automatically.
+With `loadOnMissionStart` the mission is loaded automatically. JIP and disconnecting players are saved automatically. Saving the mission needs to be done manually. Either with `grad_persistence_fnc_saveMission` or with the admin chat-command `#savemission`. This only works for logged admins, not for voted admins.
+
+# Functions
+There are only two important functions. `grad_persistence_fnc_saveMission`and `grad_persistence_fnc_loadMission`.
 
 ## grad_persistence_fnc_saveMission
 Saves the current mission according to configuration. Has to be executed on server. Optionally shows a warning message before saving, so that players can leave their vehicles. (Players that are inside vehicles during saving will spawn dismounted, but inside the vehicle object.)
