@@ -1,6 +1,6 @@
 # GRAD Persistence
 
-Enables you to:
+Enables you to save:
 
 * AI units
 * vehicles
