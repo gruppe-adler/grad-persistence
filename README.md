@@ -12,7 +12,7 @@ Limitations:
 
 * magazines stored in containers refill
 * weapon attachments on weapons in containers get removed from the weapon, but added to container cargo
-* grad-fortifications owners are lost (--> you won't be able to pack up persistence after loading - demolition works though)
+* grad-fortifications owners are lost (--> you won't be able to pack up fortifications after loading - demolition works though)
 
 GRAD Persistence is multiplayer and JIP proof.
 
