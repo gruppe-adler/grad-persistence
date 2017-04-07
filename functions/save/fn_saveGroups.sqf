@@ -30,7 +30,17 @@ _allGroups = allGroups;
     _thisUnitsData = _thisGroupData select 1;
 
     {
-        if (!(isPlayer _x) && {!(isNull _x)} && {alive _x} && {vehicle _x == _x} && {!(_x getVariable ["grad_persistence_isEditorObject",false])} && {if (_area isEqualType false) then {true} else {_x inArea _area}}) then {
+        if (
+                !(isPlayer _x) &&
+                {!(isNull _x)} &&
+                {alive _x} &&
+                {vehicle _x == _x} &&
+                {!(_x getVariable ["grad_persistence_isEditorObject",false])} &&
+                {!(_x getVariable ["grad_persistence_isExcluded",false])} && 
+                {!((group _x) getVariable ["grad_persistence_isExcluded",false])} &&
+                {if (_area isEqualType false) then {true} else {_x inArea _area}}
+            ) then {
+
             _thisUnitHash = [] call CBA_fnc_hashCreate;
             [_thisUnitHash,"type",typeOf _x] call CBA_fnc_hashSet;
             [_thisUnitHash,"posASL",getPosASL _x] call CBA_fnc_hashSet;
@@ -38,6 +48,7 @@ _allGroups = allGroups;
             [_thisUnitHash,"damage",damage _x] call CBA_fnc_hashSet;
 
             _thisUnitsData pushBack _thisUnitHash;
+
         };
 
         false

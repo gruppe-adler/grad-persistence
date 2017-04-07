@@ -10,6 +10,7 @@ params [
 
 
 if (!isServer) exitWith {};
+if (_unit getVariable ["grad_persistence_isExcluded",false]) exitWith {};
 
 _missionTag = [] call grad_persistence_fnc_getMissionTag;
 _playersTag = _missionTag + "_players";
