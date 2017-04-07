@@ -1,5 +1,9 @@
-["savemission", {
+["gradpersistenceSave", {
     [true, 10] remoteExec ["grad_persistence_fnc_saveMission",2,false];
+}, "adminLogged"] call CBA_fnc_registerChatCommand;
+
+["gradpersistenceLoad", {
+    [] remoteExec ["grad_persistence_fnc_loadMission",2,false];
 }, "adminLogged"] call CBA_fnc_registerChatCommand;
 
 if (isServer) then {
