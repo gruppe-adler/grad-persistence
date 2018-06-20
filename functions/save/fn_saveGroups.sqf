@@ -35,8 +35,8 @@ _allGroups = allGroups;
                 {!(isNull _x)} &&
                 {alive _x} &&
                 {vehicle _x == _x} &&
-                {!(_x getVariable ["grad_persistence_isEditorObject",false]) || [missionConfigFile >> "CfgGradPersistence", "excludeEditorObjects", 0] call BIS_fnc_returnConfigEntry == 0} &&
-                {!(_x getVariable ["grad_persistence_isExcluded",false])} &&
+                {!(_x getVariable ["grad_persistence_isEditorObject",false])} &&
+                {!(_x getVariable ["grad_persistence_isExcluded",false])} && 
                 {!((group _x) getVariable ["grad_persistence_isExcluded",false])} &&
                 {if (_area isEqualType false) then {true} else {_x inArea _area}}
             ) then {
