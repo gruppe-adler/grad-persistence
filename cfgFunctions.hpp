@@ -26,6 +26,7 @@ class GRAD_persistence {
         class addWeaponItems {};
         class createVehicleCrew {};
         class loadAllPlayers {};
+        class loadContainers {};
         class loadGroups {};
         class loadMission {};
         class loadPlayer {};
@@ -43,6 +44,7 @@ class GRAD_persistence {
         class deInstanceTFARRadios {};
         class getInventory {};
         class saveAllPlayers {};
+        class saveContainers {};
         class saveGroups {};
         class saveMission {};
         class savePlayer {};

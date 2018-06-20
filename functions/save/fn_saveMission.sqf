@@ -13,6 +13,9 @@ if (_showWarning) then {
     _saveVehicles = ([missionConfigFile >> "CfgGradPersistence", "saveVehicles", 1] call BIS_fnc_returnConfigEntry) > 0;
     if (_saveVehicles) then {[_area] call grad_persistence_fnc_saveVehicles};
 
+    _saveContainers = ([missionConfigFile >> "CfgGradPersistence", "saveContainers", 1] call BIS_fnc_returnConfigEntry) > 0;
+    if (_saveContainers) then {[_area] call grad_persistence_fnc_saveContainers};
+
     _saveStatics = ([missionConfigFile >> "CfgGradPersistence", "saveStatics", 1] call BIS_fnc_returnConfigEntry) > 0;
     if (_saveStatics) then {[_area] call grad_persistence_fnc_saveStatics};
 

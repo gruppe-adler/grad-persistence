@@ -15,10 +15,11 @@ _vehiclesData resize 0;
 
 _allVehicles = vehicles;
 _allVehicles = _allVehicles select {
+    !(_x isKindOf "ThingX") &&
     !(_x isKindOf "Static") &&
     {alive _x} &&
     {!(_x getVariable ["grad_persistence_isEditorObject",false])} &&
-    {!(_x getVariable ["grad_persistence_isExcluded",false])} && 
+    {!(_x getVariable ["grad_persistence_isExcluded",false])} &&
     {if (_area isEqualType false) then {true} else {_x inArea _area}}
 };
 

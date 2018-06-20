@@ -14,6 +14,7 @@ _actualTag = if (isNil "_missionTag") then {
 
 profileNamespace setVariable [_actualTag + "_groups",nil];
 profileNamespace setVariable [_actualTag + "_vehicles",nil];
+profileNamespace setVariable [_actualTag + "_containers",nil];
 profileNamespace setVariable [_actualTag + "_statics",nil];
 profileNamespace setVariable [_actualTag + "_players",nil];
 profileNamespace setVariable [_actualTag + "_teamAccounts",nil];
