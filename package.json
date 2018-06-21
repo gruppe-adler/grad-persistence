@@ -1,6 +1,6 @@
 {
     "name": "grad-persistence",
     "description": "Gruppe Adler mission saving/loading system",
-    "version": "0.4.1",
+    "version": "0.5.0",
     "author": "McDiod"
 }

@@ -63,6 +63,11 @@ private _fnc_waitUntil = {
         if !(_unitMoney isEqualType false) then {
             _unit setVariable ["grad_lbm_myFunds",_unitMoney,true];
         };
+
+        _unitBankMoney = [_unitDataHash,"bankMoney"] call CBA_fnc_hashGet;
+        if !(_unitBankMoney isEqualType false) then {
+            _unit setVariable ["grad_moneymenu_myBankBalance",_unitBankMoney,true];
+        };
     };
 
 }, [_this,_playerWaitCondition]] call CBA_fnc_waitUntilAndExecute;

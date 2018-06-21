@@ -42,6 +42,7 @@ if (_savePlayerPosition) then {
 
 if (_savePlayerMoney) then {
     [_unitDataHash,"money",_unit getVariable ["grad_lbm_myFunds",0]] call CBA_fnc_hashSet;
+    [_unitDataHash,"bankMoney",_unit getVariable ["grad_moneymenu_myBankBalance",0]] call CBA_fnc_hashSet;
 };
 
 [_playersDataHash,_uid,_unitDataHash] call CBA_fnc_hashSet;
