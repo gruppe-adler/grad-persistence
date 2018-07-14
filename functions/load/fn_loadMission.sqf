@@ -1,3 +1,7 @@
+#define PREFIX grad
+#define COMPONENT persistence
+#include "\x\cba\addons\main\script_macros_mission.hpp"
+
 _saveUnits = ([missionConfigFile >> "CfgGradPersistence", "saveUnits", 1] call BIS_fnc_returnConfigEntry) > 0;
 if (_saveUnits) then {[] call grad_persistence_fnc_loadGroups};
 
@@ -19,4 +23,5 @@ _savePlayerPosition = ([missionConfigFile >> "CfgGradPersistence", "savePlayerPo
 _savePlayerMoney = ([missionConfigFile >> "CfgGradPersistence", "savePlayerMoney", 1] call BIS_fnc_returnConfigEntry) == 1;
 if (_savePlayerInventory || _savePlayerDamage || _savePlayerPosition || _savePlayerMoney) then {[_savePlayerInventory,_savePlayerDamage,_savePlayerPosition,_savePlayerMoney] call grad_persistence_fnc_loadAllPlayers};
 
+INFO("mission loaded");
 "grad-persistence: mission loaded" remoteExec ["systemChat",0,false];
