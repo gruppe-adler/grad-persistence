@@ -36,6 +36,7 @@ class GRAD_persistence {
         class loadVehicleHits {};
         class loadVehicleInventory {};
         class loadVehicles {};
+        class requestLoadPlayer {};
     };
 
     class save {
