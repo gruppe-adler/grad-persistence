@@ -6,10 +6,18 @@ params ["_missionTag",["_worldName",worldName]];
 
 if (!isServer) exitWith {};
 
-_actualTag = if (isNil "_missionTag") then {
-    [] call grad_persistence_fnc_getMissionTag;
+private _isThisMission = false;
+private _actualTag = if (isNil "_missionTag") then {
+    _isThisMission = true;
+    [] call grad_persistence_fnc_getMissionTag
 } else {
-    [_missionTag] call grad_persistence_fnc_getMissionTag;
+    _isThisMission = _missionTag == ([missionConfigFile >> "CfgGradPersistence", "missionTag", ""] call BIS_fnc_returnConfigEntry);
+    [_missionTag] call grad_persistence_fnc_getMissionTag
+};
+
+if (_isThisMission) then {
+    ("Players will no longer be saved on disconnect.") remoteExec ["systemChat",0,false];
+    missionNamespace setVariable [QGVAR(thisMissionCleared),true];
 };
 
 profileNamespace setVariable [_actualTag + "_groups",nil];

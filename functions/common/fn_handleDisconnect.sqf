@@ -14,8 +14,10 @@ private _fnc_onDisconnect = {
 
         if (!_savePlayerMoney && {!_savePlayerDamage} && {!_savePlayerPosition} && {!_savePlayerMoney}) exitWith {false};
 
-        INFO_1("Player %1 disconnected. Saving data.", _name);
-        [_unit,true,_savePlayerInventory,_savePlayerDamage,_savePlayerPosition,_savePlayerMoney,_uid] call grad_persistence_fnc_savePlayer;
+        if !(missionNamespace getVariable [QGVAR(thisMissionCleared),false]) then {
+            INFO_1("Player %1 disconnected. Saving data.", _name);
+            [_unit,true,_savePlayerInventory,_savePlayerDamage,_savePlayerPosition,_savePlayerMoney,_uid] call grad_persistence_fnc_savePlayer;
+        };
 
         [{
             params ["_unit","_name"];
