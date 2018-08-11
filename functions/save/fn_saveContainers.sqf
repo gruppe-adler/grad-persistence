@@ -35,6 +35,9 @@ _allContainers = _allContainers select {
     [_thisContainerHash,"damage",damage _x] call CBA_fnc_hashSet;
     [_thisContainerHash,"inventory", _containerInventory] call CBA_fnc_hashSet;
     [_thisContainerHash,"isGradFort",!isNil {_x getVariable "grad_fortifications_fortOwner"}] call CBA_fnc_hashSet;
+    [_thisContainerHash,"isGradMoneymenuStorage",_x getVariable ["grad_moneymenu_isStorage",false]] call CBA_fnc_hashSet;
+    [_thisContainerHash,"gradMoneymenuOwner",_x getVariable ["grad_moneymenu_owner",objNull]] call CBA_fnc_hashSet;
+    [_thisContainerHash,"gradLbmMoney",_x getVariable ["grad_lbm_myFunds",0]] call CBA_fnc_hashSet;
 
     _containersData pushBack _thisContainerHash;
 

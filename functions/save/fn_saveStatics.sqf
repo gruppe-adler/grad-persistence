@@ -19,7 +19,7 @@ _statics = allMissionObjects "Static";
     if (
             typeOf _x != "CBA_NamespaceDummy" &&
             {!(_x getVariable ["grad_persistence_isEditorObject",false])} &&
-            {!(_x getVariable ["grad_persistence_isExcluded",false])} && 
+            {!(_x getVariable ["grad_persistence_isExcluded",false])} &&
             {if (_area isEqualType false) then {true} else {_x inArea _area}}
         ) then {
 
@@ -29,6 +29,9 @@ _statics = allMissionObjects "Static";
         [_thisStaticHash,"vectorDirAndUp",[vectorDir _x, vectorUp _x]] call CBA_fnc_hashSet;
         [_thisStaticHash,"damage",damage _x] call CBA_fnc_hashSet;
         [_thisStaticHash,"isGradFort",!isNil {_x getVariable "grad_fortifications_fortOwner"}] call CBA_fnc_hashSet;
+        [_thisStaticHash,"isGradMoneymenuStorage",_x getVariable ["grad_moneymenu_isStorage",false]] call CBA_fnc_hashSet;
+        [_thisStaticHash,"gradMoneymenuOwner",_x getVariable ["grad_moneymenu_owner",objNull]] call CBA_fnc_hashSet;
+        [_thisStaticHash,"gradLbmMoney",_x getVariable ["grad_lbm_myFunds",objNull]] call CBA_fnc_hashSet;
 
         _staticsData pushBack _thisStaticHash;
     };
