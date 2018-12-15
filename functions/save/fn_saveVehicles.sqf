@@ -1,3 +1,5 @@
+#include "script_component.hpp"
+
 if (!isServer) exitWith {};
 
 params [["_area",false]];
@@ -8,18 +10,17 @@ if (_area isEqualType []) then {
     _area = [_center,_a,_b,_angle,_isRectangle,_c];
 };
 
-_missionTag = [] call grad_persistence_fnc_getMissionTag;
-_vehiclesTag = _missionTag + "_vehicles";
-_vehiclesData = [_vehiclesTag] call grad_persistence_fnc_getSaveData;
+private _missionTag = [] call FUNC(getMissionTag);
+private _vehiclesTag = _missionTag + "_vehicles";
+private _vehiclesData = [_vehiclesTag] call FUNC(getSaveData);
 _vehiclesData resize 0;
 
-_allVehicles = vehicles;
-_allVehicles = _allVehicles select {
+private _allVehicles = vehicles select {
     !(_x isKindOf "ThingX") &&
     !(_x isKindOf "Static") &&
     {alive _x} &&
-    {!(_x getVariable ["grad_persistence_isEditorObject",false])} &&
-    {!(_x getVariable ["grad_persistence_isExcluded",false])} &&
+    {(_x getVariable [QGVAR(isEditorObject),false]) isEqualTo (([missionConfigFile >> "CfgGradPersistence", "saveVehicles", 1] call BIS_fnc_returnConfigEntry) == 3)} &&
+    {!(_x getVariable [QGVAR(isExcluded),false])} &&
     {if (_area isEqualType false) then {true} else {_x inArea _area}}
 };
 
@@ -32,7 +33,7 @@ _allVehicles = _allVehicles select {
         _hitDamages = _hitPointDamage select 2;
     };
 
-    _vehicleInventory = [_x] call grad_persistence_fnc_getInventory;
+    _vehicleInventory = [_x] call FUNC(getInventory);
 
     _thisVehicleHash = [] call CBA_fnc_hashCreate;
 
@@ -47,8 +48,6 @@ _allVehicles = _allVehicles select {
     [_thisVehicleHash,"isGradFort",!isNil {_x getVariable "grad_fortifications_fortOwner"}] call CBA_fnc_hashSet;
 
     _vehiclesData pushBack _thisVehicleHash;
-
-    false
-} count _allVehicles;
+} forEach _allVehicles;
 
 saveProfileNamespace;
