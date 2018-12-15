@@ -28,6 +28,7 @@ class GRAD_persistence {
         class loadAllPlayers {};
         class loadContainers {};
         class loadGroups {};
+        class loadMarkers {};
         class loadMission {};
         class loadPlayer {};
         class loadStatics {};
@@ -47,6 +48,7 @@ class GRAD_persistence {
         class saveAllPlayers {};
         class saveContainers {};
         class saveGroups {};
+        class saveMarkers {};
         class saveMission {};
         class savePlayer {};
         class saveStatics {};
