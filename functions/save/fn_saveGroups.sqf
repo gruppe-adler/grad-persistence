@@ -5,6 +5,8 @@
 *   [unit hash, unit hash, unit hash, [...]]
 */
 
+#include "script_component.hpp"
+
 if (!isServer) exitWith {};
 
 params [["_area",false]];
@@ -15,14 +17,12 @@ if (_area isEqualType []) then {
     _area = [_center,_a,_b,_angle,_isRectangle,_c];
 };
 
-diag_log str _area;
-
-_missionTag = [] call grad_persistence_fnc_getMissionTag;
-_groupsTag = _missionTag + "_groups";
-_groupsData = [_groupsTag] call grad_persistence_fnc_getSaveData;
+private _missionTag = [] call FUNC(getMissionTag);
+private _groupsTag = _missionTag + "_groups";
+private _groupsData = [_groupsTag] call FUNC(getSaveData);
 _groupsData resize 0;
 
-_allGroups = allGroups;
+private _allGroups = allGroups;
 
 {
     _thisGroup = _x;
@@ -35,9 +35,9 @@ _allGroups = allGroups;
                 {!(isNull _x)} &&
                 {alive _x} &&
                 {vehicle _x == _x} &&
-                {!(_x getVariable ["grad_persistence_isEditorObject",false])} &&
-                {!(_x getVariable ["grad_persistence_isExcluded",false])} && 
-                {!((group _x) getVariable ["grad_persistence_isExcluded",false])} &&
+                {(_x getVariable [QGVAR(isEditorObject),false]) isEqualTo (([missionConfigFile >> "CfgGradPersistence", "saveUnits", 1] call BIS_fnc_returnConfigEntry) == 3)} &&
+                {!(_x getVariable [QGVAR(isExcluded),false])} &&
+                {!((group _x) getVariable [QGVAR(isExcluded),false])} &&
                 {if (_area isEqualType false) then {true} else {_x inArea _area}}
             ) then {
 
