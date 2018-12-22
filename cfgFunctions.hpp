@@ -31,6 +31,7 @@ class GRAD_persistence {
         class loadMission {};
         class loadPlayer {};
         class loadStatics {};
+        class loadTasks {};
         class loadTeamAccounts {};
         class loadTurretMagazines {};
         class loadVehicleHits {};
@@ -50,6 +51,7 @@ class GRAD_persistence {
         class saveMission {};
         class savePlayer {};
         class saveStatics {};
+        class saveTasks {};
         class saveTeamAccounts {};
         class saveVehicles {};
     };
