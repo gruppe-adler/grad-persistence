@@ -19,13 +19,13 @@ private _allMapMarkers = allMapMarkers;
 
 {
     if (
-            (getMarkerType _x != "") &&
+            !((getMarkerType _x) in ["","Empty"]) &&
             {if (_area isEqualType false) then {true} else {(getMarkerPos _x) inArea _area}} &&
             {(_x find "ACE_BFT") != 0} &&
             {(_x in (missionNamespace getVariable [QGVAR(editorMarkers),[]])) isEqualTo (([missionConfigFile >> "CfgGradPersistence", "saveMarkers", 1] call BIS_fnc_returnConfigEntry) == 3)}
         ) then {
 
-        _thisMarkerHash = [] call CBA_fnc_hashCreate;
+        private _thisMarkerHash = [] call CBA_fnc_hashCreate;
 
         [_thisMarkerHash,"name",_x] call CBA_fnc_hashSet;
         [_thisMarkerHash,"alpha",markerAlpha _x] call CBA_fnc_hashSet;
