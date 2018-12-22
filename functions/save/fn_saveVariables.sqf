@@ -1,11 +1,11 @@
 #include "script_component.hpp"
 
+params ["_allVariableClasses"];
+
 private _missionTag = [] call FUNC(getMissionTag);
 private _varsTag = _missionTag + "_vars";
 private _varsData = [_varsTag] call FUNC(getSaveData);
 _varsData resize 0;
-
-private _allVariableClasses = "true" configClasses (missionConfigFile >> "CfgGradPersistence" >> "customVariables");
 
 {
     private _varNamespace = [_x,"varNamespace",false] call BIS_fnc_returnConfigEntry;

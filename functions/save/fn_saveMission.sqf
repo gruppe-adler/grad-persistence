@@ -9,8 +9,10 @@ if (_showWarning) then {
 [{
     params ["_area"];
 
+    private _allVariableClasses = "true" configClasses (missionConfigFile >> "CfgGradPersistence" >> "customVariables");
+
     _saveUnits = ([missionConfigFile >> "CfgGradPersistence", "saveUnits", 1] call BIS_fnc_returnConfigEntry) > 0;
-    if (_saveUnits) then {[_area] call FUNC(saveGroups)};
+    if (_saveUnits) then {[_area,_allVariableClasses] call FUNC(saveGroups)};
 
     _saveVehicles = ([missionConfigFile >> "CfgGradPersistence", "saveVehicles", 1] call BIS_fnc_returnConfigEntry) > 0;
     if (_saveVehicles) then {[_area] call FUNC(saveVehicles)};
@@ -33,7 +35,7 @@ if (_showWarning) then {
     _saveTasks = ([missionConfigFile >> "CfgGradPersistence", "saveTasks", 0] call BIS_fnc_returnConfigEntry) > 0;
     if (_saveTasks) then {[] call FUNC(saveTasks)};
 
-    [] call FUNC(saveVariables);
+    [_allVariableClasses] call FUNC(saveVariables);
 
     "grad-persistence: mission saved" remoteExec ["systemChat",0,false];
 }, [_area], _waitTime] call CBA_fnc_waitAndExecute;
