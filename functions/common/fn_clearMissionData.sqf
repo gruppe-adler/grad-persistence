@@ -27,6 +27,7 @@ profileNamespace setVariable [_actualTag + "_statics",nil];
 profileNamespace setVariable [_actualTag + "_tasks",nil];
 profileNamespace setVariable [_actualTag + "_players",nil];
 profileNamespace setVariable [_actualTag + "_teamAccounts",nil];
+profileNamespace setVariable [_actualTag + "_vars",nil];
 
 INFO_1("Missiondata for missiontag %1 deleted.",_actualTag);
 (format ["Missiondata for missiontag %1 deleted.",_actualTag]) remoteExec ["systemChat",0,false];

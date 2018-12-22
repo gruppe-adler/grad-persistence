@@ -33,5 +33,7 @@ if (_showWarning) then {
     _saveTasks = ([missionConfigFile >> "CfgGradPersistence", "saveTasks", 0] call BIS_fnc_returnConfigEntry) > 0;
     if (_saveTasks) then {[] call FUNC(saveTasks)};
 
+    [] call FUNC(saveVariables);
+
     "grad-persistence: mission saved" remoteExec ["systemChat",0,false];
 }, [_area], _waitTime] call CBA_fnc_waitAndExecute;
