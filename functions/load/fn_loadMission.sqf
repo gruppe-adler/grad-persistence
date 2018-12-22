@@ -18,5 +18,8 @@ if (_saveMarkers) then {[] call FUNC(loadMarkers)};
 private _saveTeamAccounts = ([missionConfigFile >> "CfgGradPersistence", "saveTeamAccounts", 1] call BIS_fnc_returnConfigEntry) > 0;
 if (_saveTeamAccounts) then {[] call FUNC(loadTeamAccounts)};
 
+private _saveTasks = ([missionConfigFile >> "CfgGradPersistence", "saveTasks", 0] call BIS_fnc_returnConfigEntry) > 0;
+if (_saveTasks) then {[] call FUNC(loadTasks)};
+
 INFO("mission loaded");
 "grad-persistence: mission loaded" remoteExec ["systemChat",0,false];

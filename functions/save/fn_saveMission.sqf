@@ -33,5 +33,8 @@ if (_showWarning) then {
     _savePlayerMoney = ([missionConfigFile >> "CfgGradPersistence", "savePlayerMoney", 1] call BIS_fnc_returnConfigEntry) == 1;
     if (_savePlayerInventory || _savePlayerDamage || _savePlayerPosition || _savePlayerMoney) then {[_savePlayerInventory,_savePlayerDamage,_savePlayerPosition,_savePlayerMoney] call FUNC(saveAllPlayers)};
 
+    _saveTasks = ([missionConfigFile >> "CfgGradPersistence", "saveTasks", 0] call BIS_fnc_returnConfigEntry) > 0;
+    if (_saveTasks) then {[] call FUNC(saveTasks)};
+
     "grad-persistence: mission saved" remoteExec ["systemChat",0,false];
 }, [_area], _waitTime] call CBA_fnc_waitAndExecute;

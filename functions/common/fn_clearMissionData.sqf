@@ -23,6 +23,7 @@ profileNamespace setVariable [_actualTag + "_vehicles",nil];
 profileNamespace setVariable [_actualTag + "_containers",nil];
 profileNamespace setVariable [_actualTag + "_statics",nil];
 profileNamespace setVariable [_actualTag + "_markers",nil];
+profileNamespace setVariable [_actualTag + "_tasks",nil];
 profileNamespace setVariable [_actualTag + "_players",nil];
 profileNamespace setVariable [_actualTag + "_teamAccounts",nil];
 
