@@ -1,3 +1,5 @@
+#include "script_component.hpp"
+
 if (!isServer) exitWith {};
 
 _missionTag = [] call grad_persistence_fnc_getMissionTag;
@@ -26,17 +28,11 @@ _groupsData = [_groupsTag] call grad_persistence_fnc_getSaveData;
             _thisUnit setPosASL _posASL;
             _thisUnit setDamage _damage;
 
-            {
-                _x params ["_varName","_value","_isPublic"];
-                _thisUnit setVariable [_varName,_value,_isPublic];
-            } forEach _vars;
+            [_vars,_thisUnit] call FUNC(loadObjectVars);
         },[_thisUnit,_thisUnitHash]] call CBA_fnc_waitUntilAndExecute;
 
     } forEach _thisGroupUnits;
 
-    {
-        _x params ["_varName","_value","_isPublic"];
-        _thisGroup setVariable [_varName,_value,_isPublic];
-    } forEach _thisGroupVars;
+    [_thisGroupVars,_thisGroup] call FUNC(loadObjectVars);
 
 } forEach _groupsData;

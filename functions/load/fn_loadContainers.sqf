@@ -46,6 +46,9 @@ _containersData = [_containersTag] call grad_persistence_fnc_getSaveData;
             };
         };
 
+        private _vars = [_thisContainerHash,"vars"] call CBA_fnc_hashGet;
+        [_vars,_thisContainer] call FUNC(loadObjectVars);
+
     }, [_thisContainer,_thisContainerHash]] call CBA_fnc_waitUntilAndExecute;
 
     false

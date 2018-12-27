@@ -15,13 +15,13 @@ if (_showWarning) then {
     if (_saveUnits) then {[_area,_allVariableClasses] call FUNC(saveGroups)};
 
     _saveVehicles = ([missionConfigFile >> "CfgGradPersistence", "saveVehicles", 1] call BIS_fnc_returnConfigEntry) > 0;
-    if (_saveVehicles) then {[_area] call FUNC(saveVehicles)};
+    if (_saveVehicles) then {[_area,_allVariableClasses] call FUNC(saveVehicles)};
 
     _saveContainers = ([missionConfigFile >> "CfgGradPersistence", "saveContainers", 1] call BIS_fnc_returnConfigEntry) > 0;
-    if (_saveContainers) then {[_area] call FUNC(saveContainers)};
+    if (_saveContainers) then {[_area,_allVariableClasses] call FUNC(saveContainers)};
 
     _saveStatics = ([missionConfigFile >> "CfgGradPersistence", "saveStatics", 1] call BIS_fnc_returnConfigEntry) > 0;
-    if (_saveStatics) then {[_area] call FUNC(saveStatics)};
+    if (_saveStatics) then {[_area,_allVariableClasses] call FUNC(saveStatics)};
 
     _saveTeamAccounts = ([missionConfigFile >> "CfgGradPersistence", "saveTeamAccounts", 1] call BIS_fnc_returnConfigEntry) > 0;
     if (_saveTeamAccounts) then {[] call FUNC(saveTeamAccounts)};

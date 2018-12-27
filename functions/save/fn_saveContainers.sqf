@@ -2,12 +2,16 @@
 
 if (!isServer) exitWith {};
 
-params [["_area",false]];
+params [["_area",false],["_allVariableClasses",[]]];
 
 if (_area isEqualType []) then {
     _area params ["_center","_a","_b",["_angle",0],["_isRectangle",false],["_c",-1]];
     if (isNil "_b") then {_b = _a};
     _area = [_center,_a,_b,_angle,_isRectangle,_c];
+};
+
+private _allContainerVariableClasses = _allVariableClasses select {
+    ([_x,"varNamespace",""] call BIS_fnc_returnConfigEntry) == "container"
 };
 
 private _missionTag = [] call FUNC(getMissionTag);
@@ -27,9 +31,8 @@ _allContainers = _allContainers select {
 };
 
 {
-    _containerInventory = [_x] call FUNC(getInventory);
-
-    _thisContainerHash = [] call CBA_fnc_hashCreate;
+    private _containerInventory = [_x] call FUNC(getInventory);
+    private _thisContainerHash = [] call CBA_fnc_hashCreate;
 
     [_thisContainerHash,"type",typeOf _x] call CBA_fnc_hashSet;
     [_thisContainerHash,"posASL",getPosASL _x] call CBA_fnc_hashSet;
@@ -40,6 +43,9 @@ _allContainers = _allContainers select {
     [_thisContainerHash,"isGradMoneymenuStorage",_x getVariable ["grad_moneymenu_isStorage",false]] call CBA_fnc_hashSet;
     [_thisContainerHash,"gradMoneymenuOwner",_x getVariable ["grad_moneymenu_owner",objNull]] call CBA_fnc_hashSet;
     [_thisContainerHash,"gradLbmMoney",_x getVariable ["grad_lbm_myFunds",0]] call CBA_fnc_hashSet;
+
+    private _thisContainerVars = [_allContainerVariableClasses,_x] call FUNC(saveObjectVars);
+    [_thisContainerHash,"vars",_thisContainerVars] call CBA_fnc_hashSet;
 
     _containersData pushBack _thisContainerHash;
 } forEach _allContainers;

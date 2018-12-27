@@ -58,16 +58,7 @@ private _allGroups = allGroups;
             [_thisUnitHash,"dir",getDir _thisUnit] call CBA_fnc_hashSet;
             [_thisUnitHash,"damage",damage _thisUnit] call CBA_fnc_hashSet;
 
-            private _thisUnitVars = [];
-            {
-                private _varName = [_x,"varName",""] call BIS_fnc_returnConfigEntry;
-                private _value = _thisUnit getVariable _varName;
-                if (!isNil "_value") then {
-                    private _isPublic = [_x,"public",false] call BIS_fnc_returnConfigEntry;
-                    _thisUnitVars pushBack [_varName,_value,_isPublic];
-                };
-            } forEach _allUnitsVariableClasses;
-
+            private _thisUnitVars = [_allUnitsVariableClasses,_thisUnit] call FUNC(saveObjectVars);
             [_thisUnitHash,"vars",_thisUnitVars] call CBA_fnc_hashSet;
 
             _thisUnitsData pushBack _thisUnitHash;
@@ -78,16 +69,7 @@ private _allGroups = allGroups;
     // only save if group has units that were saved
     if (count (_thisGroupData select 1) > 0) then {
         _groupsData pushBack _thisGroupData;
-        _thisGroupVars = _thisGroupData select 2;
-
-        {
-            private _varName = [_x,"varName",""] call BIS_fnc_returnConfigEntry;
-            private _value = _thisGroup getVariable _varName;
-            if (!isNil "_value") then {
-                private _isPublic = [_x,"public",false] call BIS_fnc_returnConfigEntry;
-                _thisGroupVars pushBack [_varName,_value,_isPublic];
-            };
-        } forEach _allGroupsVariableClasses;
+        _thisGroupData set [2,[_allGroupsVariableClasses,_thisGroup] call FUNC(saveObjectVars)];
     };
 
     false

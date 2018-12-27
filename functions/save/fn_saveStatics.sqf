@@ -10,6 +10,10 @@ if (_area isEqualType []) then {
     _area = [_center,_a,_b,_angle,_isRectangle,_c];
 };
 
+private _allStaticVariableClasses = _allVariableClasses select {
+    ([_x,"varNamespace",""] call BIS_fnc_returnConfigEntry) == "static"
+};
+
 private _missionTag = [] call FUNC(getMissionTag);
 private _staticsTag = _missionTag + "_statics";
 private _staticsData = [_staticsTag] call FUNC(getSaveData);
@@ -34,6 +38,9 @@ private _statics = allMissionObjects "Static";
         [_thisStaticHash,"isGradMoneymenuStorage",_x getVariable ["grad_moneymenu_isStorage",false]] call CBA_fnc_hashSet;
         [_thisStaticHash,"gradMoneymenuOwner",_x getVariable ["grad_moneymenu_owner",objNull]] call CBA_fnc_hashSet;
         [_thisStaticHash,"gradLbmMoney",_x getVariable ["grad_lbm_myFunds",objNull]] call CBA_fnc_hashSet;
+
+        private _thisStaticVars = [_allStaticVariableClasses,_x] call FUNC(saveObjectVars);
+        [_thisStaticHash,"vars",_thisStaticVars] call CBA_fnc_hashSet;
 
         _staticsData pushBack _thisStaticHash;
     };

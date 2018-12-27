@@ -1,8 +1,10 @@
+#include "script_component.hpp"
+
 if (!isServer) exitWith {};
 
-_missionTag = [] call grad_persistence_fnc_getMissionTag;
+_missionTag = [] call FUNC(getMissionTag);
 _staticsTag = _missionTag + "_statics";
-_staticsData = [_staticsTag] call grad_persistence_fnc_getSaveData;
+_staticsData = [_staticsTag] call FUNC(getSaveData);
 
 {
     _thisStaticHash = _x;
@@ -39,6 +41,9 @@ _staticsData = [_staticsTag] call grad_persistence_fnc_getSaveData;
                 _thisStatic setVariable ["grad_lbm_myFunds",_thisLbmMoney,true];
             };
         };
+
+        private _vars = [_thisStaticHash,"vars"] call CBA_fnc_hashGet;
+        [_vars,_thisStatic] call FUNC(loadObjectVars);
 
     }, [_thisStatic,_thisStaticHash]] call CBA_fnc_waitUntilAndExecute;
 
