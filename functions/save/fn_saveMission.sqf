@@ -26,7 +26,7 @@ if (_showWarning) then {
     _saveTriggers = ([missionConfigFile >> "CfgGradPersistence", "saveTriggers", 0] call BIS_fnc_returnConfigEntry) > 0;
     if (_saveTriggers) then {[_area,_allVariableClasses] call FUNC(saveTriggers)};
 
-    _saveMarkers = ([missionConfigFile >> "CfgGradPersistence", "saveMarkers", 1] call BIS_fnc_returnConfigEntry) > 0;
+    _saveMarkers = ([missionConfigFile >> "CfgGradPersistence", "saveMarkers", 0] call BIS_fnc_returnConfigEntry) > 0;
     if (_saveMarkers) then {[_area] call FUNC(saveMarkers)};
 
     _saveTeamAccounts = ([missionConfigFile >> "CfgGradPersistence", "saveTeamAccounts", 1] call BIS_fnc_returnConfigEntry) > 0;
