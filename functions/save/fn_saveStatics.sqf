@@ -2,7 +2,7 @@
 
 if (!isServer) exitWith {};
 
-params [["_area",false]];
+params [["_area",false],["_allVariableClasses",[]]];
 
 if (_area isEqualType []) then {
     _area params ["_center","_a","_b",["_angle",0],["_isRectangle",false],["_c",-1]];
