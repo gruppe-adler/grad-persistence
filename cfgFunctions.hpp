@@ -8,6 +8,7 @@ class GRAD_persistence {
 
         class clearMissionData {};
         class generateCountArray {};
+        class getMarkerChannel {};
         class getMissionTag {};
         class getSaveData {};
         class handleDisconnect {};
@@ -28,6 +29,7 @@ class GRAD_persistence {
         class loadAllPlayers {};
         class loadContainers {};
         class loadGroups {};
+        class loadMarkers {};
         class loadMission {};
         class loadObjectVars {};
         class loadPlayer {};
@@ -46,10 +48,12 @@ class GRAD_persistence {
         file = MODULES_DIRECTORY\grad-persistence\functions\save;
 
         class deInstanceTFARRadios {};
+        class getApplicableMarkers {};
         class getInventory {};
         class saveAllPlayers {};
         class saveContainers {};
         class saveGroups {};
+        class saveMarkers {};
         class saveMission {};
         class saveObjectVars {};
         class savePlayer {};

@@ -34,3 +34,7 @@ if (([missionConfigFile >> "CfgGradPersistence", "saveStatics", 1] call BIS_fnc_
         false
     } count _statics;
 };
+
+if (([missionConfigFile >> "CfgGradPersistence", "saveMarkers", 1] call BIS_fnc_returnConfigEntry) in [1,3]) then {
+    GVAR(editorMarkers) = allMapMarkers;
+};
