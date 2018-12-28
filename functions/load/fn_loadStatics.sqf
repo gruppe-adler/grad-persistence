@@ -2,25 +2,25 @@
 
 if (!isServer) exitWith {};
 
-_missionTag = [] call FUNC(getMissionTag);
-_staticsTag = _missionTag + "_statics";
-_staticsData = [_staticsTag] call FUNC(getSaveData);
+private _missionTag = [] call FUNC(getMissionTag);
+private _staticsTag = _missionTag + "_statics";
+private _staticsData = [_staticsTag] call FUNC(getSaveData);
 
 {
-    _thisStaticHash = _x;
-    _type = [_thisStaticHash,"type"] call CBA_fnc_hashGet;
-    _thisStatic = createVehicle [_type,[0,0,0],[],0,"CAN_COLLIDE"];
+    private _thisStaticHash = _x;
+    private _type = [_thisStaticHash,"type"] call CBA_fnc_hashGet;
+    private _thisStatic = createVehicle [_type,[0,0,0],[],0,"CAN_COLLIDE"];
 
     [{!isNull (_this select 0)}, {
         params ["_thisStatic","_thisStaticHash"];
 
-        _posASL = [_thisStaticHash,"posASL"] call CBA_fnc_hashGet;
-        _vectorDirAndUp = [_thisStaticHash,"vectorDirAndUp"] call CBA_fnc_hashGet;
-        _damage = [_thisStaticHash,"damage"] call CBA_fnc_hashGet;
-        _isGradFort = [_thisStaticHash,"isGradFort"] call CBA_fnc_hashGet;
-        _isGradMoneymenuStorage = [_thisStaticHash,"isGradMoneymenuStorage"] call CBA_fnc_hashGet;
-        _gradMoneymenuOwner = [_thisStaticHash,"gradMoneymenuOwner"] call CBA_fnc_hashGet;
-        _thisLbmMoney = [_thisStaticHash,"gradLbmMoney"] call CBA_fnc_hashGet;
+        private _posASL = [_thisStaticHash,"posASL"] call CBA_fnc_hashGet;
+        private _vectorDirAndUp = [_thisStaticHash,"vectorDirAndUp"] call CBA_fnc_hashGet;
+        private _damage = [_thisStaticHash,"damage"] call CBA_fnc_hashGet;
+        private _isGradFort = [_thisStaticHash,"isGradFort"] call CBA_fnc_hashGet;
+        private _isGradMoneymenuStorage = [_thisStaticHash,"isGradMoneymenuStorage"] call CBA_fnc_hashGet;
+        private _gradMoneymenuOwner = [_thisStaticHash,"gradMoneymenuOwner"] call CBA_fnc_hashGet;
+        private _thisLbmMoney = [_thisStaticHash,"gradLbmMoney"] call CBA_fnc_hashGet;
 
         _thisStatic setVectorDirAndUp _vectorDirAndUp;
         _thisStatic setPosASL _posASL;
