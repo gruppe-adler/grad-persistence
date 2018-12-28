@@ -2,12 +2,16 @@
 
 if (!isServer) exitWith {};
 
-params [["_area",false]];
+params [["_area",false],["_allVariableClasses",[]]];
 
 if (_area isEqualType []) then {
     _area params ["_center","_a","_b",["_angle",0],["_isRectangle",false],["_c",-1]];
     if (isNil "_b") then {_b = _a};
     _area = [_center,_a,_b,_angle,_isRectangle,_c];
+};
+
+private _allStaticVariableClasses = _allVariableClasses select {
+    ([_x,"varNamespace",""] call BIS_fnc_returnConfigEntry) == "static"
 };
 
 private _missionTag = [] call FUNC(getMissionTag);
@@ -34,6 +38,9 @@ private _statics = allMissionObjects "Static";
         [_thisStaticHash,"isGradMoneymenuStorage",_x getVariable ["grad_moneymenu_isStorage",false]] call CBA_fnc_hashSet;
         [_thisStaticHash,"gradMoneymenuOwner",_x getVariable ["grad_moneymenu_owner",objNull]] call CBA_fnc_hashSet;
         [_thisStaticHash,"gradLbmMoney",_x getVariable ["grad_lbm_myFunds",objNull]] call CBA_fnc_hashSet;
+
+        private _thisStaticVars = [_allStaticVariableClasses,_x] call FUNC(saveObjectVars);
+        [_thisStaticHash,"vars",_thisStaticVars] call CBA_fnc_hashSet;
 
         _staticsData pushBack _thisStaticHash;
     };

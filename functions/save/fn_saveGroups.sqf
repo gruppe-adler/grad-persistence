@@ -9,7 +9,16 @@
 
 if (!isServer) exitWith {};
 
-params [["_area",false]];
+params [["_area",false],["_allVariableClasses",[]]];
+
+private _allGroupsVariableClasses = _allVariableClasses select {
+    ([_x,"varNamespace",""] call BIS_fnc_returnConfigEntry) == "group"
+};
+
+private _allUnitsVariableClasses = _allVariableClasses select {
+    ([_x,"varNamespace",""] call BIS_fnc_returnConfigEntry) == "unit"
+};
+
 
 if (_area isEqualType []) then {
     _area params ["_center","_a","_b",["_angle",0],["_isRectangle",false],["_c",-1]];
@@ -25,37 +34,42 @@ _groupsData resize 0;
 private _allGroups = allGroups;
 
 {
-    _thisGroup = _x;
-    _thisGroupData = [side _x,[]];
-    _thisUnitsData = _thisGroupData select 1;
+    private _thisGroup = _x;
+    private _thisGroupData = [side _x,[],[]];
+    private _thisUnitsData = _thisGroupData select 1;
 
     {
+        private _thisUnit = _x;
+
         if (
-                !(isPlayer _x) &&
-                {!(isNull _x)} &&
-                {alive _x} &&
-                {vehicle _x == _x} &&
-                {(_x getVariable [QGVAR(isEditorObject),false]) isEqualTo (([missionConfigFile >> "CfgGradPersistence", "saveUnits", 1] call BIS_fnc_returnConfigEntry) == 3)} &&
-                {!(_x getVariable [QGVAR(isExcluded),false])} &&
-                {!((group _x) getVariable [QGVAR(isExcluded),false])} &&
-                {if (_area isEqualType false) then {true} else {_x inArea _area}}
+                !(isPlayer _thisUnit) &&
+                {!(isNull _thisUnit)} &&
+                {alive _thisUnit} &&
+                {vehicle _thisUnit == _thisUnit} &&
+                {(_thisUnit getVariable [QGVAR(isEditorObject),false]) isEqualTo (([missionConfigFile >> "CfgGradPersistence", "saveUnits", 1] call BIS_fnc_returnConfigEntry) == 3)} &&
+                {!(_thisUnit getVariable [QGVAR(isExcluded),false])} &&
+                {!((group _thisUnit) getVariable [QGVAR(isExcluded),false])} &&
+                {if (_area isEqualType false) then {true} else {_thisUnit inArea _area}}
             ) then {
 
             _thisUnitHash = [] call CBA_fnc_hashCreate;
-            [_thisUnitHash,"type",typeOf _x] call CBA_fnc_hashSet;
-            [_thisUnitHash,"posASL",getPosASL _x] call CBA_fnc_hashSet;
-            [_thisUnitHash,"dir",getDir _x] call CBA_fnc_hashSet;
-            [_thisUnitHash,"damage",damage _x] call CBA_fnc_hashSet;
+            [_thisUnitHash,"type",typeOf _thisUnit] call CBA_fnc_hashSet;
+            [_thisUnitHash,"posASL",getPosASL _thisUnit] call CBA_fnc_hashSet;
+            [_thisUnitHash,"dir",getDir _thisUnit] call CBA_fnc_hashSet;
+            [_thisUnitHash,"damage",damage _thisUnit] call CBA_fnc_hashSet;
+
+            private _thisUnitVars = [_allUnitsVariableClasses,_thisUnit] call FUNC(saveObjectVars);
+            [_thisUnitHash,"vars",_thisUnitVars] call CBA_fnc_hashSet;
 
             _thisUnitsData pushBack _thisUnitHash;
-
         };
 
-        false
-    } count (units _thisGroup);
+    } forEach (units _thisGroup);
 
+    // only save if group has units that were saved
     if (count (_thisGroupData select 1) > 0) then {
         _groupsData pushBack _thisGroupData;
+        _thisGroupData set [2,[_allGroupsVariableClasses,_thisGroup] call FUNC(saveObjectVars)];
     };
 
     false

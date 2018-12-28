@@ -1,6 +1,4 @@
-#define PREFIX grad
-#define COMPONENT persistence
-#include "\x\cba\addons\main\script_macros_mission.hpp"
+#include "script_component.hpp"
 
 private _playerWaitCondition = [missionConfigFile >> "CfgGradPersistence", "playerWaitCondition", ""] call BIS_fnc_returnConfigEntry;
 if (_playerWaitCondition == "") then {_playerWaitCondition = "true"};
@@ -21,25 +19,25 @@ private _fnc_waitUntil = {
         ["_savePlayerMoney",([missionConfigFile >> "CfgGradPersistence", "savePlayerMoney", 1] call BIS_fnc_returnConfigEntry) == 1]
     ];
 
-    _missionTag = [] call grad_persistence_fnc_getMissionTag;
-    _playersTag = _missionTag + "_players";
-    _playersDataHash = [_playersTag,true,false] call grad_persistence_fnc_getSaveData;
+    private _missionTag = [] call FUNC(getMissionTag);
+    private _playersTag = _missionTag + "_players";
+    private _playersDataHash = [_playersTag,true,false] call FUNC(getSaveData);
 
-    _uid = getPlayerUID _unit;
+    private _uid = getPlayerUID _unit;
     if (_uid == "") exitWith {ERROR_1("UID for player %1 not found.",name _unit)};
 
-    _unitDataHash = [_playersDataHash,_uid] call CBA_fnc_hashGet;
+    private _unitDataHash = [_playersDataHash,_uid] call CBA_fnc_hashGet;
     if (_unitDataHash isEqualType false) exitWith {INFO_1("Data for player %1 not found.",name _unit)};
 
     if (_savePlayerInventory) then {
-        _unitLoadout = [_unitDataHash,"inventory"] call CBA_fnc_hashGet;
+        private _unitLoadout = [_unitDataHash,"inventory"] call CBA_fnc_hashGet;
         if !(_unitLoadout isEqualType false) then {
             _unit setUnitLoadout [_unitLoadout,false];
         };
     };
 
     if (_savePlayerDamage) then {
-        _unitHits = [_unitDataHash,"damage"] call CBA_fnc_hashGet;
+        private _unitHits = [_unitDataHash,"damage"] call CBA_fnc_hashGet;
         if (!(_unitHits isEqualType false) && {count _unitHits > 0}) then {
             _unitHits params ["_unitHitNames","_unitHitDamages"];
             {
@@ -49,8 +47,8 @@ private _fnc_waitUntil = {
     };
 
     if (_savePlayerPosition) then {
-        _unitPosASL = [_unitDataHash,"posASL"] call CBA_fnc_hashGet;
-        _unitDir = [_unitDataHash,"dir"] call CBA_fnc_hashGet;
+        private _unitPosASL = [_unitDataHash,"posASL"] call CBA_fnc_hashGet;
+        private _unitDir = [_unitDataHash,"dir"] call CBA_fnc_hashGet;
 
         if (!(_unitPosASL isEqualType false) && !(_unitDir isEqualType false)) then {
             _unit setPosASL _unitPosASL;
@@ -59,15 +57,18 @@ private _fnc_waitUntil = {
     };
 
     if (_savePlayerMoney) then {
-        _unitMoney = [_unitDataHash,"money"] call CBA_fnc_hashGet;
+        private _unitMoney = [_unitDataHash,"money"] call CBA_fnc_hashGet;
         if !(_unitMoney isEqualType false) then {
             _unit setVariable ["grad_lbm_myFunds",_unitMoney,true];
         };
 
-        _unitBankMoney = [_unitDataHash,"bankMoney"] call CBA_fnc_hashGet;
+        private _unitBankMoney = [_unitDataHash,"bankMoney"] call CBA_fnc_hashGet;
         if !(_unitBankMoney isEqualType false) then {
             _unit setVariable ["grad_moneymenu_myBankBalance",_unitBankMoney,true];
         };
     };
+
+    private _vars = [_unitDataHash,"vars"] call CBA_fnc_hashGet;
+    [_vars,_unit] call FUNC(loadObjectVars);
 
 }, [_this,_playerWaitCondition]] call CBA_fnc_waitUntilAndExecute;
