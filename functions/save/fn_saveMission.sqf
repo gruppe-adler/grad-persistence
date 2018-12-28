@@ -23,20 +23,23 @@ if (_showWarning) then {
     _saveStatics = ([missionConfigFile >> "CfgGradPersistence", "saveStatics", 1] call BIS_fnc_returnConfigEntry) > 0;
     if (_saveStatics) then {[_area,_allVariableClasses] call FUNC(saveStatics)};
 
+    _saveTriggers = ([missionConfigFile >> "CfgGradPersistence", "saveTriggers", 0] call BIS_fnc_returnConfigEntry) > 0;
+    if (_saveTriggers) then {[_area,_allVariableClasses] call FUNC(saveTriggers)};
+
     _saveMarkers = ([missionConfigFile >> "CfgGradPersistence", "saveMarkers", 1] call BIS_fnc_returnConfigEntry) > 0;
     if (_saveMarkers) then {[_area] call FUNC(saveMarkers)};
 
     _saveTeamAccounts = ([missionConfigFile >> "CfgGradPersistence", "saveTeamAccounts", 1] call BIS_fnc_returnConfigEntry) > 0;
     if (_saveTeamAccounts) then {[] call FUNC(saveTeamAccounts)};
 
+    _saveTasks = ([missionConfigFile >> "CfgGradPersistence", "saveTasks", 0] call BIS_fnc_returnConfigEntry) > 0;
+    if (_saveTasks) then {[] call FUNC(saveTasks)};
+
     _savePlayerInventory = ([missionConfigFile >> "CfgGradPersistence", "savePlayerInventory", 1] call BIS_fnc_returnConfigEntry) == 1;
     _savePlayerDamage = ([missionConfigFile >> "CfgGradPersistence", "savePlayerDamage", 1] call BIS_fnc_returnConfigEntry) == 1;
     _savePlayerPosition = ([missionConfigFile >> "CfgGradPersistence", "savePlayerPosition", 1] call BIS_fnc_returnConfigEntry) == 1;
     _savePlayerMoney = ([missionConfigFile >> "CfgGradPersistence", "savePlayerMoney", 1] call BIS_fnc_returnConfigEntry) == 1;
     if (_savePlayerInventory || _savePlayerDamage || _savePlayerPosition || _savePlayerMoney) then {[_savePlayerInventory,_savePlayerDamage,_savePlayerPosition,_savePlayerMoney,_allVariableClasses] call FUNC(saveAllPlayers)};
-
-    _saveTasks = ([missionConfigFile >> "CfgGradPersistence", "saveTasks", 0] call BIS_fnc_returnConfigEntry) > 0;
-    if (_saveTasks) then {[] call FUNC(saveTasks)};
 
     [_allVariableClasses] call FUNC(saveVariables);
 
