@@ -2,9 +2,9 @@
 
 if (!isServer) exitWith {};
 
-_missionTag = [] call grad_persistence_fnc_getMissionTag;
-_groupsTag = _missionTag + "_groups";
-_groupsData = [_groupsTag] call grad_persistence_fnc_getSaveData;
+private _missionTag = [] call grad_persistence_fnc_getMissionTag;
+private _groupsTag = _missionTag + "_groups";
+private _groupsData = [_groupsTag] call grad_persistence_fnc_getSaveData;
 
 {
     _x params ["_thisGroupSide","_thisGroupUnits","_thisGroupVars"];
@@ -13,8 +13,27 @@ _groupsData = [_groupsTag] call grad_persistence_fnc_getSaveData;
     {
         _thisUnitHash = _x;
 
-        _type = [_thisUnitHash,"type"] call CBA_fnc_hashGet;
-        _thisUnit = _thisGroup createUnit [_type, [0,0,0], [], 0, "CAN_COLLIDE"];
+        private _vehVarName = [_thisUnitHash,"varName"] call CBA_fnc_hashGet;
+
+        private _thisUnit = objNull;
+        private _editorVehicleFound = false;
+        if (!isNil "_vehVarName") then {
+            // editor-placed object that already exists
+            private _editorVehicle = call compile _vehVarName;
+            if (!isNil "_editorVehicle") then {
+                _thisUnit = _editorVehicle;
+                _editorVehicleFound = true;
+            };
+        };
+
+        if (!_editorVehicleFound) then {
+            private _type = [_thisUnitHash,"type"] call CBA_fnc_hashGet;
+            _thisUnit = _thisGroup createUnit [_type, [0,0,0], [], 0, "CAN_COLLIDE"];
+
+            if (!isNil "_vehVarName") then {
+                [_thisVehicle,_vehVarName] remoteExec ["setVehicleVarName",0,_thisVehicle];
+            };
+        };
 
         [{!isNull (_this select 0)}, {
             params ["_thisUnit","_thisUnitHash"];

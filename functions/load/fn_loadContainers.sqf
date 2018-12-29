@@ -9,10 +9,28 @@ private _containersData = [_containersTag] call FUNC(getSaveData);
 {
 
     private _thisContainerHash = _x;
-    private _type = [_thisContainerHash,"type"] call CBA_fnc_hashGet;
     private _side = [_thisContainerHash,"side"] call CBA_fnc_hashGet;
+    private _vehVarName = [_thisContainerHash,"varName"] call CBA_fnc_hashGet;
 
-    private _thisContainer = createVehicle [_type, [0,0,0], [], 0, "CAN_COLLIDE"];
+    private _thisContainer = objNull;
+    private _editorVehicleFound = false;
+    if (!isNil "_vehVarName") then {
+        // editor-placed object that already exists
+        private _editorVehicle = call compile _vehVarName;
+        if (!isNil "_editorVehicle") then {
+            _thisContainer = _editorVehicle;
+            _editorVehicleFound = true;
+        };
+    };
+
+    if (!_editorVehicleFound) then {
+        private _type = [_thisContainerHash,"type"] call CBA_fnc_hashGet;
+        _thisContainer = createVehicle [_type, [0,0,0], [], 0, "CAN_COLLIDE"];
+
+        if (!isNil "_vehVarName") then {
+            [_thisVehicle,_vehVarName] remoteExec ["setVehicleVarName",0,_thisVehicle];
+        };
+    };
 
     [{!isNull (_this select 0)}, {
         params ["_thisContainer","_thisContainerHash"];

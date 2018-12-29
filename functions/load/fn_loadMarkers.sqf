@@ -16,7 +16,12 @@ private _markersData = [_markersTag] call FUNC(getSaveData);
         _originalMarkerName
     };
 
-    private _thisMarker = createMarker [_markerName,[0,0,0]];
+    // check if marker already exists
+    private _thisMarker = if (markerShape _markerName == "") then {
+        createMarker [_markerName,[0,0,0]]
+    } else {
+        _markerName
+    };
 
     _thisMarker setMarkerAlpha ([_thisMarkerHash,"alpha"] call CBA_fnc_hashGet);
     _thisMarker setMarkerBrush ([_thisMarkerHash,"brush"] call CBA_fnc_hashGet);

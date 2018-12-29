@@ -8,8 +8,28 @@ private _staticsData = [_staticsTag] call FUNC(getSaveData);
 
 {
     private _thisStaticHash = _x;
-    private _type = [_thisStaticHash,"type"] call CBA_fnc_hashGet;
-    private _thisStatic = createVehicle [_type,[0,0,0],[],0,"CAN_COLLIDE"];
+    private _vehVarName = [_thisStaticHash,"varName"] call CBA_fnc_hashGet;
+
+    private _thisStatic = objNull;
+    private _editorVehicleFound = false;
+    if (!isNil "_vehVarName") then {
+        // editor-placed object that already exists
+        private _editorVehicle = call compile _vehVarName;
+        if (!isNil "_editorVehicle") then {
+            _thisStatic = _editorVehicle;
+            _editorVehicleFound = true;
+        };
+    };
+
+    if (!_editorVehicleFound) then {
+        private _type = [_thisStaticHash,"type"] call CBA_fnc_hashGet;
+        _thisStatic = createVehicle [_type,[0,0,0],[],0,"CAN_COLLIDE"];
+
+        if (!isNil "_vehVarName") then {
+            [_thisStatic,_vehVarName] remoteExec ["setVehicleVarName",0,_thisStatic];
+        };
+    };
+
 
     [{!isNull (_this select 0)}, {
         params ["_thisStatic","_thisStaticHash"];
