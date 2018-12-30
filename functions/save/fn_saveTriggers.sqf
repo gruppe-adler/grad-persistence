@@ -27,6 +27,11 @@ if (_area isEqualType []) then {
 {
     private _thisTriggerHash = [] call CBA_fnc_hashCreate;
 
+    private _vehVarName = vehicleVarName _x;
+    if (_vehVarName != "") then {
+        [_thisTriggerHash,"varName",_vehVarName] call CBA_fnc_hashSet;
+    };
+
     [_thisTriggerHash,"posASL",getPosASL _x] call CBA_fnc_hashSet;
     [_thisTriggerHash,"activated",triggerActivated _x] call CBA_fnc_hashSet;
     [_thisTriggerHash,"activation",triggerActivation _x] call CBA_fnc_hashSet;

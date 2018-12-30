@@ -10,7 +10,28 @@ private _reExecute = ([missionConfigFile >> "CfgGradPersistence", "saveTriggers"
 
 {
     private _thisTriggerHash = _x;
-    private _thisTrigger = createTrigger ["EmptyDetector",[0,0,0]];
+    private _vehVarName = [_thisTriggerHash,"varName"] call CBA_fnc_hashGet;
+
+    private _thisTrigger = objNull;
+    private _editorVehicleFound = false;
+    if (!isNil "_vehVarName") then {
+        // editor-placed object that already exists
+        private _editorVehicle = call compile _vehVarName;
+        if (!isNil "_editorVehicle") then {
+            _thisTrigger = _editorVehicle;
+            _editorVehicleFound = true;
+        };
+    };
+
+    if (!_editorVehicleFound) then {
+        _thisTrigger = createTrigger ["EmptyDetector",[0,0,0]];
+
+        if (!isNil "_vehVarName") then {
+            [_thisTrigger,_vehVarName] remoteExec ["setVehicleVarName",0,_thisTrigger];
+        };
+    };
+
+
 
     [{!isNull (_this select 0)}, {
         params ["_thisTrigger","_thisTriggerHash","_reExecute"];

@@ -42,6 +42,11 @@ private _allVehicles = vehicles select {
 
     private _thisVehicleHash = [] call CBA_fnc_hashCreate;
 
+    private _vehVarName = vehicleVarName _thisVehicle;
+    if (_vehVarName != "") then {
+        [_thisVehicleHash,"varName",_vehVarName] call CBA_fnc_hashSet;
+    };
+
     [_thisVehicleHash,"type",typeOf _thisVehicle] call CBA_fnc_hashSet;
     [_thisVehicleHash,"posASL",getPosASL _thisVehicle] call CBA_fnc_hashSet;
     [_thisVehicleHash,"vectorDirAndUp",[vectorDir _thisVehicle,vectorUp _thisVehicle]] call CBA_fnc_hashSet;
@@ -51,6 +56,7 @@ private _allVehicles = vehicles select {
     [_thisVehicleHash,"turretMagazines", magazinesAllTurrets _thisVehicle] call CBA_fnc_hashSet;
     [_thisVehicleHash,"inventory", _vehicleInventory] call CBA_fnc_hashSet;
     [_thisVehicleHash,"isGradFort",!isNil {_thisVehicle getVariable "grad_fortifications_fortOwner"}] call CBA_fnc_hashSet;
+
 
     private _thisVehicleVars = [_allVehicleVariableClasses,_thisVehicle] call FUNC(saveObjectVars);
     [_thisVehicleHash,"vars",_thisVehicleVars] call CBA_fnc_hashSet;

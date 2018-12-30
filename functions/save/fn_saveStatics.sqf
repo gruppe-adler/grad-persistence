@@ -30,6 +30,12 @@ private _statics = allMissionObjects "Static";
         ) then {
 
         _thisStaticHash = [] call CBA_fnc_hashCreate;
+
+        private _vehVarName = vehicleVarName _x;
+        if (_vehVarName != "") then {
+            [_thisStaticHash,"varName",_vehVarName] call CBA_fnc_hashSet;
+        };
+
         [_thisStaticHash,"type",typeOf _x] call CBA_fnc_hashSet;
         [_thisStaticHash,"posASL",getPosASL _x] call CBA_fnc_hashSet;
         [_thisStaticHash,"vectorDirAndUp",[vectorDir _x, vectorUp _x]] call CBA_fnc_hashSet;

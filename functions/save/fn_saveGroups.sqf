@@ -53,6 +53,12 @@ private _allGroups = allGroups;
             ) then {
 
             _thisUnitHash = [] call CBA_fnc_hashCreate;
+
+            private _vehVarName = vehicleVarName _thisUnit;
+            if (_vehVarName != "") then {
+                [_thisUnitHash,"varName",_vehVarName] call CBA_fnc_hashSet;
+            };
+
             [_thisUnitHash,"type",typeOf _thisUnit] call CBA_fnc_hashSet;
             [_thisUnitHash,"posASL",getPosASL _thisUnit] call CBA_fnc_hashSet;
             [_thisUnitHash,"dir",getDir _thisUnit] call CBA_fnc_hashSet;

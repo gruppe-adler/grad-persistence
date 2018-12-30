@@ -2,9 +2,9 @@
 
 if (!isServer) exitWith {};
 
-_missionTag = [] call grad_persistence_fnc_getMissionTag;
-_vehiclesTag = _missionTag + "_vehicles";
-_vehiclesData = [_vehiclesTag] call grad_persistence_fnc_getSaveData;
+private _missionTag = [] call grad_persistence_fnc_getMissionTag;
+private _vehiclesTag = _missionTag + "_vehicles";
+private _vehiclesData = [_vehiclesTag] call grad_persistence_fnc_getSaveData;
 
 {
 
@@ -12,13 +12,32 @@ _vehiclesData = [_vehiclesTag] call grad_persistence_fnc_getSaveData;
     private _type = [_thisVehicleHash,"type"] call CBA_fnc_hashGet;
     private _side = [_thisVehicleHash,"side"] call CBA_fnc_hashGet;
     private _hasCrew = [_thisVehicleHash,"hasCrew"] call CBA_fnc_hashGet;
+    private _vehVarName = [_thisVehicleHash,"varName"] call CBA_fnc_hashGet;
 
-    //idk, weird shit happens when you use createVehicle and add crew
-    _thisVehicle = if (!_hasCrew) then {
-        createVehicle [_type, [0,0,0], [], 0, "CAN_COLLIDE"]
-    } else {
-        ([[0,0,0],0,_type,_side] call BIS_fnc_spawnVehicle) select 0
+    private _thisVehicle = objNull;
+    private _editorVehicleFound = false;
+    if (!isNil "_vehVarName") then {
+        // editor-placed object that already exists
+        private _editorVehicle = call compile _vehVarName;
+        if (!isNil "_editorVehicle") then {
+            _thisVehicle = _editorVehicle;
+            _editorVehicleFound = true;
+        };
     };
+
+    if (!_editorVehicleFound) then {
+        //idk, weird shit happens when you use createVehicle and add crew
+        _thisVehicle = if (!_hasCrew) then {
+            createVehicle [_type, [0,0,0], [], 0, "CAN_COLLIDE"]
+        } else {
+            ([[0,0,0],0,_type,_side] call BIS_fnc_spawnVehicle) select 0
+        };
+
+        if (!isNil "_vehVarName") then {
+            [_thisVehicle,_vehVarName] remoteExec ["setVehicleVarName",0,_thisVehicle];
+        };
+    };
+
 
     [{!isNull (_this select 0)}, {
         params ["_thisVehicle","_thisVehicleHash"];
@@ -46,5 +65,5 @@ _vehiclesData = [_vehiclesTag] call grad_persistence_fnc_getSaveData;
 
     }, [_thisVehicle,_thisVehicleHash]] call CBA_fnc_waitUntilAndExecute;
 
-    false
+    true
 } count _vehiclesData;
