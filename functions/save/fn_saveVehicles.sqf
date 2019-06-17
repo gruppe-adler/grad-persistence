@@ -51,6 +51,7 @@ private _allVehicles = vehicles select {
     [_thisVehicleHash,"posASL",getPosASL _thisVehicle] call CBA_fnc_hashSet;
     [_thisVehicleHash,"vectorDirAndUp",[vectorDir _thisVehicle,vectorUp _thisVehicle]] call CBA_fnc_hashSet;
     [_thisVehicleHash,"hitpointDamage",[_hitNames,_hitDamages]] call CBA_fnc_hashSet;
+    [_thisVehicleHash,"fuel",fuel _thisVehicle] call CBA_fnc_hashSet;
     [_thisVehicleHash,"hasCrew",{!isPlayer _thisVehicle} count (crew _thisVehicle) > 0] call CBA_fnc_hashSet;
     [_thisVehicleHash,"side",side _thisVehicle] call CBA_fnc_hashSet;
     [_thisVehicleHash,"turretMagazines", magazinesAllTurrets _thisVehicle] call CBA_fnc_hashSet;

@@ -43,6 +43,7 @@ private _vehiclesData = [_vehiclesTag] call grad_persistence_fnc_getSaveData;
         params ["_thisVehicle","_thisVehicleHash"];
 
         private _posASL = [_thisVehicleHash,"posASL"] call CBA_fnc_hashGet;
+        private _fuel = [_thisVehicleHash,"fuel"] call CBA_fnc_hashGet;
         private _vectorDirAndUp = [_thisVehicleHash,"vectorDirAndUp"] call CBA_fnc_hashGet;
         private _hitPointDamage = [_thisVehicleHash,"hitpointDamage"] call CBA_fnc_hashGet;
         private _turretMagazines = [_thisVehicleHash,"turretMagazines"] call CBA_fnc_hashGet;
@@ -51,6 +52,7 @@ private _vehiclesData = [_vehiclesTag] call grad_persistence_fnc_getSaveData;
 
         _thisVehicle setVectorDirAndUp _vectorDirAndUp;
         _thisVehicle setPosASL _posASL;
+        _thisVehicle setFuel _fuel;
 
         [_thisVehicle,_turretMagazines] call grad_persistence_fnc_loadTurretMagazines;
         [_thisVehicle,_hitPointDamage] call grad_persistence_fnc_loadVehicleHits;
