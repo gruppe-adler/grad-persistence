@@ -67,5 +67,12 @@ private _staticsData = [_staticsTag] call FUNC(getSaveData);
 
     }, [_thisStatic,_thisStaticHash]] call CBA_fnc_waitUntilAndExecute;
 
-    false
-} count _staticsData;
+} forEach _staticsData;
+
+// delete all editor vehicles that were killed in a previous save
+private _killedVarnames = [_missionTag + "_killedVarnames"] call FUNC(getSaveData);
+private _killedStaticsVarnames = _killedVarnames param [3,[]];
+{
+    private _editorVehicle = call compile _x;
+    if (!isNil "_editorVehicle") then {deleteVehicle _editorVehicle};
+} forEach _killedStaticsVarnames;

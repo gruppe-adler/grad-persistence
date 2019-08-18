@@ -36,8 +36,8 @@ private _vehiclesData = [_vehiclesTag] call grad_persistence_fnc_getSaveData;
         if (!isNil "_vehVarName") then {
             [_thisVehicle,_vehVarName] remoteExec ["setVehicleVarName",0,_thisVehicle];
         };
-    };
 
+    };
 
     [{!isNull (_this select 0)}, {
         params ["_thisVehicle","_thisVehicleHash"];
@@ -67,5 +67,13 @@ private _vehiclesData = [_vehiclesTag] call grad_persistence_fnc_getSaveData;
 
     }, [_thisVehicle,_thisVehicleHash]] call CBA_fnc_waitUntilAndExecute;
 
-    true
-} count _vehiclesData;
+
+} forEach _vehiclesData;
+
+// delete all editor vehicles that were killed in a previous save
+private _killedVarnames = [_missionTag + "_killedVarnames"] call FUNC(getSaveData);
+private _killedVehiclesVarnames = _killedVarnames param [1,[]];
+{
+    private _editorVehicle = call compile _x;
+    if (!isNil "_editorVehicle") then {deleteVehicle _editorVehicle};
+} forEach _killedVehiclesVarnames;

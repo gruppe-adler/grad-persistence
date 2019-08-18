@@ -17,6 +17,7 @@ private _allContainerVariableClasses = _allVariableClasses select {
 private _missionTag = [] call FUNC(getMissionTag);
 private _containersTag = _missionTag + "_containers";
 private _containersData = [_containersTag] call FUNC(getSaveData);
+private _foundContainersVarnames = GVAR(allFoundVarNames) select 2;
 _containersData resize 0;
 
 private _allContainers = vehicles;
@@ -42,6 +43,7 @@ _allContainers = _allContainers select {
     private _vehVarName = vehicleVarName _x;
     if (_vehVarName != "") then {
         [_thisContainerHash,"varName",_vehVarName] call CBA_fnc_hashSet;
+        _foundContainersVarnames deleteAt (_foundContainersVarnames find _vehVarName);
     };
 
     [_thisContainerHash,"type",typeOf _x] call CBA_fnc_hashSet;
@@ -59,5 +61,12 @@ _allContainers = _allContainers select {
 
     _containersData pushBack _thisContainerHash;
 } forEach _allContainers;
+
+// all _foundVehiclesVarnames that were not saved must have been removed or killed --> add to killedVarNames array
+private _killedVarnames = [_missionTag + "_killedVarnames"] call FUNC(getSaveData);
+private _killedContainersVarnames = _killedVarnames param [2,[]];
+_killedContainersVarnames append _foundContainersVarnames;
+_killedContainersVarnames arrayIntersect _killedContainersVarnames;
+_killedVarnames set [2,_killedContainersVarnames];
 
 saveProfileNamespace;

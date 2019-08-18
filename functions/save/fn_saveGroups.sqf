@@ -29,6 +29,7 @@ if (_area isEqualType []) then {
 private _missionTag = [] call FUNC(getMissionTag);
 private _groupsTag = _missionTag + "_groups";
 private _groupsData = [_groupsTag] call FUNC(getSaveData);
+private _foundUnitsVarnames = GVAR(allFoundVarNames) select 0;
 _groupsData resize 0;
 
 private _allGroups = allGroups;
@@ -61,6 +62,7 @@ private _saveGroupsMode = [missionConfigFile >> "CfgGradPersistence", "saveUnits
             private _vehVarName = vehicleVarName _thisUnit;
             if (_vehVarName != "") then {
                 [_thisUnitHash,"varName",_vehVarName] call CBA_fnc_hashSet;
+                _foundUnitsVarnames deleteAt (_foundUnitsVarnames find _vehVarName);
             };
 
             [_thisUnitHash,"type",typeOf _thisUnit] call CBA_fnc_hashSet;
@@ -84,5 +86,12 @@ private _saveGroupsMode = [missionConfigFile >> "CfgGradPersistence", "saveUnits
 
     false
 } count _allGroups;
+
+// all _foundVehiclesVarnames that were not saved must have been removed or killed --> add to killedVarNames array
+private _killedVarnames = [_missionTag + "_killedVarnames"] call FUNC(getSaveData);
+private _killedUnitsVarnames = _killedVarnames param [0,[]];
+_killedUnitsVarnames append _foundUnitsVarnames;
+_killedUnitsVarnames arrayIntersect _killedUnitsVarnames;
+_killedVarnames set [0,_killedUnitsVarnames];
 
 saveProfileNamespace;

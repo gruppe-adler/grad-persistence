@@ -55,3 +55,11 @@ private _groupsData = [_groupsTag] call grad_persistence_fnc_getSaveData;
     [_thisGroupVars,_thisGroup] call FUNC(loadObjectVars);
 
 } forEach _groupsData;
+
+// delete all editor vehicles that were killed in a previous save
+private _killedVarnames = [_missionTag + "_killedVarnames"] call FUNC(getSaveData);
+private _killedUnitsVarnames = _killedVarnames param [0,[]];
+{
+    private _editorVehicle = call compile _x;
+    if (!isNil "_editorVehicle") then {deleteVehicle _editorVehicle};
+} forEach _killedUnitsVarnames;

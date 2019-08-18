@@ -71,5 +71,12 @@ private _containersData = [_containersTag] call FUNC(getSaveData);
 
     }, [_thisContainer,_thisContainerHash]] call CBA_fnc_waitUntilAndExecute;
 
-    false
-} count _containersData;
+} forEach _containersData;
+
+// delete all editor vehicles that were killed in a previous save
+private _killedVarnames = [_missionTag + "_killedVarnames"] call FUNC(getSaveData);
+private _killedContainersVarnames = _killedVarnames param [2,[]];
+{
+    private _editorVehicle = call compile _x;
+    if (!isNil "_editorVehicle") then {deleteVehicle _editorVehicle};
+} forEach _killedContainersVarnames;

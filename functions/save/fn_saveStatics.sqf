@@ -17,6 +17,7 @@ private _allStaticVariableClasses = _allVariableClasses select {
 private _missionTag = [] call FUNC(getMissionTag);
 private _staticsTag = _missionTag + "_statics";
 private _staticsData = [_staticsTag] call FUNC(getSaveData);
+private _foundStaticsVarnames = GVAR(allFoundVarNames) select 3;
 _staticsData resize 0;
 
 private _statics = allMissionObjects "Static";
@@ -38,6 +39,7 @@ private _saveStaticsMode = [missionConfigFile >> "CfgGradPersistence", "saveStat
         private _vehVarName = vehicleVarName _x;
         if (_vehVarName != "") then {
             [_thisStaticHash,"varName",_vehVarName] call CBA_fnc_hashSet;
+            _foundStaticsVarnames deleteAt (_foundStaticsVarnames find _vehVarName);
         };
 
         [_thisStaticHash,"type",typeOf _x] call CBA_fnc_hashSet;
@@ -55,5 +57,13 @@ private _saveStaticsMode = [missionConfigFile >> "CfgGradPersistence", "saveStat
         _staticsData pushBack _thisStaticHash;
     };
 } forEach _statics;
+
+// all _foundVehiclesVarnames that were not saved must have been removed or killed --> add to killedVarNames array
+private _killedVarnames = [_missionTag + "_killedVarnames"] call FUNC(getSaveData);
+private _killedStaticsVarnames = _killedVarnames param [3,[]];
+_killedStaticsVarnames append _foundStaticsVarnames;
+_killedStaticsVarnames arrayIntersect _killedStaticsVarnames;
+_killedVarnames set [3,_killedStaticsVarnames];
+
 
 saveProfileNamespace;
