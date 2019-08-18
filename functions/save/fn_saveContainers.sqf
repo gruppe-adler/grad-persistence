@@ -20,13 +20,18 @@ private _containersData = [_containersTag] call FUNC(getSaveData);
 _containersData resize 0;
 
 private _allContainers = vehicles;
+private _saveContainersMode = [missionConfigFile >> "CfgGradPersistence", "saveContainers", 1] call BIS_fnc_returnConfigEntry;
+
 _allContainers = _allContainers select {
     (_x isKindOf "ThingX") &&
     (([configfile >> "CfgVehicles" >> typeOf _x,"maximumLoad",0] call BIS_fnc_returnConfigEntry) > 0) &&
     !(_x isKindOf "Static") &&
     {alive _x} &&
     {!(_x getVariable [QGVAR(isExcluded),false])} &&
-    {(_x getVariable [QGVAR(isEditorObject),false]) isEqualTo (([missionConfigFile >> "CfgGradPersistence", "saveContainers", 1] call BIS_fnc_returnConfigEntry) == 3)} &&
+    {
+        _saveContainersMode == 2 ||
+        (_x getVariable [QGVAR(isEditorObject),false]) isEqualTo (_saveContainersMode == 1)
+    } &&
     {if (_area isEqualType false) then {true} else {_x inArea _area}}
 };
 

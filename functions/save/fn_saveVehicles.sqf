@@ -19,12 +19,17 @@ private _vehiclesTag = _missionTag + "_vehicles";
 private _vehiclesData = [_vehiclesTag] call FUNC(getSaveData);
 _vehiclesData resize 0;
 
+private _saveVehiclesMode = [missionConfigFile >> "CfgGradPersistence", "saveVehicles", 1] call BIS_fnc_returnConfigEntry;
+
 private _allVehicles = vehicles select {
     !(_x isKindOf "ThingX") &&
     !(_x isKindOf "Static") &&
     {alive _x} &&
-    {(_x getVariable [QGVAR(isEditorObject),false]) isEqualTo (([missionConfigFile >> "CfgGradPersistence", "saveVehicles", 1] call BIS_fnc_returnConfigEntry) == 3)} &&
     {!(_x getVariable [QGVAR(isExcluded),false])} &&
+    {
+        _saveVehiclesMode == 2 ||
+        (_x getVariable [QGVAR(isEditorObject),false]) isEqualTo (_saveVehiclesMode == 1)
+    } &&
     {if (_area isEqualType false) then {true} else {_x inArea _area}}
 };
 

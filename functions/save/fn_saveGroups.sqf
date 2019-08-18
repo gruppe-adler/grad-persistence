@@ -32,6 +32,7 @@ private _groupsData = [_groupsTag] call FUNC(getSaveData);
 _groupsData resize 0;
 
 private _allGroups = allGroups;
+private _saveGroupsMode = [missionConfigFile >> "CfgGradPersistence", "saveUnits", 1] call BIS_fnc_returnConfigEntry;
 
 {
     private _thisGroup = _x;
@@ -46,9 +47,12 @@ private _allGroups = allGroups;
                 {!(isNull _thisUnit)} &&
                 {alive _thisUnit} &&
                 {vehicle _thisUnit == _thisUnit} &&
-                {(_thisUnit getVariable [QGVAR(isEditorObject),false]) isEqualTo (([missionConfigFile >> "CfgGradPersistence", "saveUnits", 1] call BIS_fnc_returnConfigEntry) == 3)} &&
                 {!(_thisUnit getVariable [QGVAR(isExcluded),false])} &&
                 {!((group _thisUnit) getVariable [QGVAR(isExcluded),false])} &&
+                {
+                    _saveGroupsMode == 2 ||
+                    (_thisUnit getVariable [QGVAR(isEditorObject),false]) isEqualTo (_saveGroupsMode == 1)
+                } &&
                 {if (_area isEqualType false) then {true} else {_thisUnit inArea _area}}
             ) then {
 

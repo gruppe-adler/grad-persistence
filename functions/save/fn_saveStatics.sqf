@@ -20,12 +20,16 @@ private _staticsData = [_staticsTag] call FUNC(getSaveData);
 _staticsData resize 0;
 
 private _statics = allMissionObjects "Static";
+private _saveStaticsMode = [missionConfigFile >> "CfgGradPersistence", "saveStatics", 1] call BIS_fnc_returnConfigEntry;
 
 {
     if (
             typeOf _x != "CBA_NamespaceDummy" &&
-            {(_x getVariable [QGVAR(isEditorObject),false]) isEqualTo (([missionConfigFile >> "CfgGradPersistence", "saveStatics", 1] call BIS_fnc_returnConfigEntry) == 3)} &&
             {!(_x getVariable [QGVAR(isExcluded),false])} &&
+            {
+                _saveStaticsMode == 2 ||
+                (_x getVariable [QGVAR(isEditorObject),false]) isEqualTo (_saveStaticsMode == 1)
+            } &&
             {if (_area isEqualType false) then {true} else {_x inArea _area}}
         ) then {
 
