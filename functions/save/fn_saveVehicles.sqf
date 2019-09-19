@@ -23,8 +23,8 @@ _vehiclesData resize 0;
 private _saveVehiclesMode = [missionConfigFile >> "CfgGradPersistence", "saveVehicles", 1] call BIS_fnc_returnConfigEntry;
 
 private _allVehicles = vehicles select {
-    !(_x isKindOf "ThingX") &&
     !(_x isKindOf "Static") &&
+    !((_x isKindOf "ThingX") && (([configfile >> "CfgVehicles" >> typeOf _x,"maximumLoad",0] call BIS_fnc_returnConfigEntry) > 0)) &&
     {alive _x} &&
     {!(_x getVariable [QGVAR(isExcluded),false])} &&
     {
