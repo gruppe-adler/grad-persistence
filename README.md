@@ -12,3 +12,4 @@ Enables you to save:
 * markers
 * triggers
 * variables
+* time and date

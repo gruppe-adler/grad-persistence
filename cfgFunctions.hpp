@@ -36,6 +36,7 @@ class GRAD_persistence {
         class loadStatics {};
         class loadTasks {};
         class loadTeamAccounts {};
+        class loadTimeAndDate {};
         class loadTriggers {};
         class loadTurretMagazines {};
         class loadVariables {};
@@ -61,6 +62,7 @@ class GRAD_persistence {
         class saveStatics {};
         class saveTasks {};
         class saveTeamAccounts {};
+        class saveTimeAndDate {};
         class saveTriggers {};
         class saveVariables {};
         class saveVehicles {};
