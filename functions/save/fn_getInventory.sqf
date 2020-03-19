@@ -5,10 +5,13 @@ private _inventory = [];
 private _itemCargo = itemCargo _vehicle;
 if (isNil "_itemCargo") then {_itemCargo = []};
 
-if (isClass (configfile >> "CfgPatches" >> "acre_api")) then {
+private _acreLoaded = isClass (configfile >> "CfgPatches" >> "acre_api");
+private _tfarLoaded = isClass (configfile >> "CfgPatches" >> "tfar_core");
+
+if (_acreLoaded) then {
     _itemCargo = [_itemCargo] call grad_persistence_fnc_deInstanceACRERadios;
 };
-if (isClass (configfile >> "CfgPatches" >> "tfar_core")) then {
+if (_tfarLoaded) then {
     _itemCargo = [_itemCargo] call grad_persistence_fnc_deInstanceTFARRadios;
 };
 
@@ -33,10 +36,10 @@ if (isNil "_backpackItems") then {_backpackItems = []};
     _backpackData = [typeOf _x];
 
     _backpackItemCargo = itemCargo _x;
-    if (isClass (configfile >> "CfgPatches" >> "acre_api")) then {
+    if (_acreLoaded) then {
         _backpackItemCargo = [_backpackItemCargo] call grad_persistence_fnc_deInstanceACRERadios;
     };
-    if (isClass (configfile >> "CfgPatches" >> "tfar_core")) then {
+    if (_tfarLoaded) then {
         _backpackItemCargo = [_backpackItemCargo] call grad_persistence_fnc_deInstanceTFARRadios;
     };
     _backpackItemCargo = [_backpackItemCargo] call grad_persistence_fnc_generateCountArray;
