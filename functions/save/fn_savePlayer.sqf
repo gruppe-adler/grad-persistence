@@ -13,7 +13,7 @@ params [
 
 
 if (!isServer) exitWith {};
-if (_unit getVariable [QGVAR(isExcluded),false]) exitWith {};
+if ([_unit] call FUNC(isBlacklisted)) exitWith {};
 
 if (isNil "_allPlayerVariableClasses") then {
     private _allVariableClasses = "true" configClasses (missionConfigFile >> "CfgGradPersistence" >> "customVariables");

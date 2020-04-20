@@ -6,6 +6,8 @@ class GRAD_persistence {
     class common {
         file = MODULES_DIRECTORY\grad-persistence\functions\common;
 
+        class blacklistClasses {};
+        class blacklistObjects {};
         class clearMissionData {};
         class generateCountArray {};
         class getMarkerChannel {};
@@ -14,8 +16,11 @@ class GRAD_persistence {
         class handleDisconnect {};
         class handleJIP {};
         class initModule {postInit = 1;};
+        class isBlacklisted {};
         class showWarningMessage {};
         class tagEditorObjects {};
+        class unblacklistClasses {};
+        class unblacklistObjects {};
     };
 
     class load {

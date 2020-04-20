@@ -12,7 +12,7 @@ private _allPlayerVariableClasses = _allVariableClasses select {
     ([_x,"varNamespace",""] call BIS_fnc_returnConfigEntry) == "player"
 };
 
-private _allPlayers = allPlayers select {_x isKindOf "Man"};
+private _allPlayers = allPlayers select {_x isKindOf "Man" && {!([_x] call FUNC(isBlacklisted))}};
 
 {
     [_x,false,_savePlayerInventory,_savePlayerDamage,_savePlayerPosition,_savePlayerMoney,nil,_allPlayerVariableClasses] call FUNC(savePlayer);

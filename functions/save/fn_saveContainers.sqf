@@ -28,7 +28,7 @@ _allContainers = _allContainers select {
     (([configfile >> "CfgVehicles" >> typeOf _x,"maximumLoad",0] call BIS_fnc_returnConfigEntry) > 0) &&
     !(_x isKindOf "Static") &&
     {alive _x} &&
-    {!(_x getVariable [QGVAR(isExcluded),false])} &&
+    {!([_x] call FUNC(isBlacklisted))} &&
     {
         _saveContainersMode == 2 ||
         (_x getVariable [QGVAR(isEditorObject),false]) isEqualTo (_saveContainersMode == 1)
