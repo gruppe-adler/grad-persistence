@@ -34,7 +34,60 @@ if (_uid == "") exitWith {};
 private _unitDataHash = [[],false] call CBA_fnc_hashCreate;
 
 if (_savePlayerInventory) then {
-    [_unitDataHash, "inventory", getUnitLoadout _unit] call CBA_fnc_hashSet;
+
+    private _loadout = getUnitLoadout _unit;
+    if ((count _loadout) == 0) exitWith {ERROR_1("Unit %1: no loadout array.",_unit)};
+
+    if (GVAR(acreLoaded)) then {
+        // on release of ACRE2 v2.7.3 replace with:
+        // _loadout = [_loadout] call acre_api_fnc_filterUnitLoadout;
+
+        if ((_loadout select 9) select 2 == "ItemRadioAcreFlagged") then {
+            (_loadout select 9) set [2,""];
+        };
+
+        private _fnc_replaceRadioAcre = {
+            params ["_item"];
+            if (!(_item isEqualType []) && {[_item] call acre_api_fnc_isRadio}) then {
+                _this set [0, [_item] call acre_api_fnc_getBaseRadio];
+            };
+        };
+        if !((_loadout select 3) isEqualTo []) then {
+            {_x call _fnc_replaceRadioAcre} forEach ((_loadout select 3) select 1);
+        };
+        if !((_loadout select 4) isEqualTo []) then {
+            {_x call _fnc_replaceRadioAcre} forEach ((_loadout select 4) select 1);
+        };
+        if !((_loadout select 5) isEqualTo []) then {
+            {_x call _fnc_replaceRadioAcre} forEach ((_loadout select 5) select 1);
+        };
+    };
+
+    if (GVAR(tfarLoaded)) then {
+        private _assignedRadio = (_loadout select 9) select 2;
+        if (_assignedRadio call TFAR_fnc_isRadio) then {
+            (_loadout select 9) set [2,[configFile >> "CfgWeapons" >> _assignedRadio >> "tf_parent", "text", _assignedRadio] call CBA_fnc_getConfigEntry];
+        };
+
+        private _fnc_replaceRadioTfar = {
+            params ["_item"];
+            if (!(_item isEqualType []) && {_item call TFAR_fnc_isRadio}) then {
+                diag_log ["ASDASD replaced item:",_item," with: ",[configFile >> "CfgWeapons" >> _item >> "tf_parent", "text", _item] call CBA_fnc_getConfigEntry];
+                _this set [0,[configFile >> "CfgWeapons" >> _item >> "tf_parent", "text", _item] call CBA_fnc_getConfigEntry];
+            };
+        };
+        if !((_loadout select 3) isEqualTo []) then {
+            {_x call _fnc_replaceRadioTfar} forEach ((_loadout select 3) select 1);
+        };
+        if !((_loadout select 4) isEqualTo []) then {
+            {_x call _fnc_replaceRadioTfar} forEach ((_loadout select 4) select 1);
+        };
+        if !((_loadout select 5) isEqualTo []) then {
+            {_x call _fnc_replaceRadioTfar} forEach ((_loadout select 5) select 1);
+        };
+    };
+
+    [_unitDataHash, "inventory", _loadout] call CBA_fnc_hashSet;
 };
 
 if (_savePlayerDamage) then {

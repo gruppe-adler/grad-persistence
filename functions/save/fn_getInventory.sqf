@@ -1,11 +1,20 @@
+#include "script_component.hpp"
+
 params ["_vehicle"];
 
 private _inventory = [];
 
 private _itemCargo = itemCargo _vehicle;
 if (isNil "_itemCargo") then {_itemCargo = []};
-_itemCargo = [_itemCargo] call grad_persistence_fnc_deInstanceTFARRadios;
-_itemCargo = [_itemCargo] call grad_persistence_fnc_generateCountArray;
+
+if (GVAR(acreLoaded)) then {
+    _itemCargo = [_itemCargo] call FUNC(deInstanceACRERadios);
+};
+if (GVAR(tfarLoaded)) then {
+    _itemCargo = [_itemCargo] call FUNC(deInstanceTFARRadios);
+};
+
+_itemCargo = [_itemCargo] call FUNC(generateCountArray);
 _inventory pushBack _itemCargo;
 
 
@@ -26,11 +35,16 @@ if (isNil "_backpackItems") then {_backpackItems = []};
     _backpackData = [typeOf _x];
 
     _backpackItemCargo = itemCargo _x;
-    _backpackItemCargo = [_backpackItemCargo] call grad_persistence_fnc_deInstanceTFARRadios;
-    _backpackItemCargo = [_backpackItemCargo] call grad_persistence_fnc_generateCountArray;
+    if (GVAR(acreLoaded)) then {
+        _backpackItemCargo = [_backpackItemCargo] call FUNC(deInstanceACRERadios);
+    };
+    if (GVAR(tfarLoaded)) then {
+        _backpackItemCargo = [_backpackItemCargo] call FUNC(deInstanceTFARRadios);
+    };
+    _backpackItemCargo = [_backpackItemCargo] call FUNC(generateCountArray);
 
     _backpackBackpackCargo = backpackCargo _x;
-    _backpackBackpackCargo = [_backpackBackpackCargo] call grad_persistence_fnc_generateCountArray;
+    _backpackBackpackCargo = [_backpackBackpackCargo] call FUNC(generateCountArray);
 
     _backpackData pushBack _backpackItemCargo;
     _backpackData pushBack (weaponsItems _x);
@@ -38,8 +52,7 @@ if (isNil "_backpackItems") then {_backpackItems = []};
     _backpackData pushBack _backpackBackpackCargo;
 
     _backpackCargo pushBack _backpackData;
-    false
-} count _backpackItems;
+} forEach _backpackItems;
 _inventory pushBack _backpackCargo;
 
 _inventory

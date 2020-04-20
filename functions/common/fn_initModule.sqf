@@ -1,3 +1,5 @@
+#include "script_component.hpp"
+
 ["gradpersistenceSave", {
     [true, 10] remoteExec ["grad_persistence_fnc_saveMission",2,false];
 }, "adminLogged"] call CBA_fnc_registerChatCommand;
@@ -7,7 +9,7 @@
 }, "adminLogged"] call CBA_fnc_registerChatCommand;
 
 if (isServer) then {
-    
+
     // server side player loading disabled in favor of player side load request
     /* [] call grad_persistence_fnc_handleJIP; */
 
@@ -28,3 +30,7 @@ if (hasInterface) then {
         [{call compile _this}, {[] call grad_persistence_fnc_requestLoadPlayer}, _waitCondition] call CBA_fnc_waitUntilAndExecute;
     };
 };
+
+
+GVAR(acreLoaded) = isClass (configfile >> "CfgPatches" >> "acre_api");
+GVAR(tfarLoaded) = isClass (configfile >> "CfgPatches" >> "tfar_core");
