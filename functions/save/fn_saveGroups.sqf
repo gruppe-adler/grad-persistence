@@ -48,7 +48,7 @@ private _saveGroupsMode = [missionConfigFile >> "CfgGradPersistence", "saveUnits
                 {!(isNull _thisUnit)} &&
                 {alive _thisUnit} &&
                 {vehicle _thisUnit == _thisUnit} &&
-                {!(_thisUnit getVariable [QGVAR(isExcluded),false])} &&
+                {!([_thisUnit] call FUNC(isBlacklisted))} &&
                 {!((group _thisUnit) getVariable [QGVAR(isExcluded),false])} &&
                 {
                     _saveGroupsMode == 2 ||

@@ -26,7 +26,7 @@ private _allVehicles = vehicles select {
     !(_x isKindOf "Static") &&
     !((_x isKindOf "ThingX") && (([configfile >> "CfgVehicles" >> typeOf _x,"maximumLoad",0] call BIS_fnc_returnConfigEntry) > 0)) &&
     {alive _x} &&
-    {!(_x getVariable [QGVAR(isExcluded),false])} &&
+    {!([_x] call FUNC(isBlacklisted))} &&
     {
         _saveVehiclesMode == 2 ||
         (_x getVariable [QGVAR(isEditorObject),false]) isEqualTo (_saveVehiclesMode == 1)

@@ -26,7 +26,7 @@ private _saveStaticsMode = [missionConfigFile >> "CfgGradPersistence", "saveStat
 {
     if (
             typeOf _x != "CBA_NamespaceDummy" &&
-            {!(_x getVariable [QGVAR(isExcluded),false])} &&
+            {!([_x] call FUNC(isBlacklisted))} &&
             {
                 _saveStaticsMode == 2 ||
                 (_x getVariable [QGVAR(isEditorObject),false]) isEqualTo (_saveStaticsMode == 1)

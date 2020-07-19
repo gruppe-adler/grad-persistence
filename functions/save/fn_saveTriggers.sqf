@@ -19,7 +19,7 @@ private _triggersTag = _missionTag + "_triggers";
 private _triggersData = [_triggersTag] call FUNC(getSaveData);
 _triggersData resize 0;
 
-private _triggers = allMissionObjects "EmptyDetector";
+private _triggers = (allMissionObjects "EmptyDetector") select {!([_x] call FUNC(isBlacklisted))};
 if (_area isEqualType []) then {
     _triggers = _triggers select {_x inArea _area};
 };
