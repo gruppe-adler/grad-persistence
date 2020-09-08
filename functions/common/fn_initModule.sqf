@@ -8,6 +8,10 @@
     [] remoteExec ["grad_persistence_fnc_loadMission",2,false];
 }, "adminLogged"] call CBA_fnc_registerChatCommand;
 
+["gradpersistenceLoadPlayers", {
+    [] remoteExec ["grad_persistence_fnc_loadAllPlayers",2,false];
+}, "adminLogged"] call CBA_fnc_registerChatCommand;
+
 if (isServer) then {
 
     // server side player loading disabled in favor of player side load request

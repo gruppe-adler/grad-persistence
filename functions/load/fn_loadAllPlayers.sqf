@@ -12,3 +12,6 @@ _allPlayers = allPlayers select {_x isKindOf "Man"};
 
     false
 } count _allPlayers;
+
+INFO("all players loaded");
+"grad-persistence: players loaded" remoteExec ["systemChat",0,false];
