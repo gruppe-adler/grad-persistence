@@ -27,5 +27,9 @@ if (_saveTriggers) then {[] call FUNC(loadTriggers)};
 private _saveTimeAndDate = ([missionConfigFile >> "CfgGradPersistence", "saveTimeAndDate", 0] call BIS_fnc_returnConfigEntry) > 0;
 if (_saveTimeAndDate) then {[] call FUNC(loadTimeAndDate)};
 
+if (isClass (missionConfigFile >> "CfgGradPersistence" >> "customVariables")) then {
+    [] call FUNC(loadVariables);
+};
+
 INFO("mission loaded");
 "grad-persistence: mission loaded" remoteExec ["systemChat",0,false];
