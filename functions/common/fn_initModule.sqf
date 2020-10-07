@@ -12,6 +12,14 @@
     [] remoteExec ["grad_persistence_fnc_loadAllPlayers",2,false];
 }, "adminLogged"] call CBA_fnc_registerChatCommand;
 
+["gradpersistenceLoadPlayer", {
+    params [["_player",""]];
+    if (_player == "") exitWith {
+        systemChat "Use '#gradPersistenceLoadPlayer <name>' or '#gradPersistenceLoadPlayer <UID>'";
+    };
+    _this remoteExecCall ["grad_persistence_fnc_loadPlayerChatcommandServer",2,false];
+}, "adminLogged"] call CBA_fnc_registerChatCommand;
+
 if (isServer) then {
 
     // server side player loading disabled in favor of player side load request

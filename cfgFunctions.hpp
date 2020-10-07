@@ -38,6 +38,7 @@ class GRAD_persistence {
         class loadMission {};
         class loadObjectVars {};
         class loadPlayer {};
+        class loadPlayerChatcommandServer {};
         class loadStatics {};
         class loadTasks {};
         class loadTeamAccounts {};
