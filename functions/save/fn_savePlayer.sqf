@@ -72,7 +72,6 @@ if (_savePlayerInventory) then {
         private _fnc_replaceRadioTfar = {
             params ["_item"];
             if (!(_item isEqualType []) && {_item call TFAR_fnc_isRadio}) then {
-                diag_log ["ASDASD replaced item:",_item," with: ",[configFile >> "CfgWeapons" >> _item >> "tf_parent", "text", _item] call CBA_fnc_getConfigEntry];
                 _this set [0,[configFile >> "CfgWeapons" >> _item >> "tf_parent", "text", _item] call CBA_fnc_getConfigEntry];
             };
         };
