@@ -37,7 +37,6 @@ private _staticsData = [_staticsTag] call FUNC(getSaveData);
         private _posASL = [_thisStaticHash,"posASL"] call CBA_fnc_hashGet;
         private _vectorDirAndUp = [_thisStaticHash,"vectorDirAndUp"] call CBA_fnc_hashGet;
         private _damage = [_thisStaticHash,"damage"] call CBA_fnc_hashGet;
-        private _isGradFort = [_thisStaticHash,"isGradFort"] call CBA_fnc_hashGet;
         private _isGradMoneymenuStorage = [_thisStaticHash,"isGradMoneymenuStorage"] call CBA_fnc_hashGet;
         private _gradMoneymenuOwner = [_thisStaticHash,"gradMoneymenuOwner"] call CBA_fnc_hashGet;
         private _thisLbmMoney = [_thisStaticHash,"gradLbmMoney"] call CBA_fnc_hashGet;
@@ -45,10 +44,6 @@ private _staticsData = [_staticsTag] call FUNC(getSaveData);
         _thisStatic setVectorDirAndUp _vectorDirAndUp;
         _thisStatic setPosASL _posASL;
         _thisStatic setDamage _damage;
-
-        if (_isGradFort && {isClass (missionConfigFile >> "CfgFunctions" >> "GRAD_fortifications")}) then {
-            [_thisStatic,objNull] remoteExec ["grad_fortifications_fnc_initFort",0,true];
-        };
 
         if (_isGradMoneymenuStorage && {!(_gradMoneymenuOwner isEqualType false)}) then {
             if !(objNull isEqualTo _gradMoneymenuOwner) then {

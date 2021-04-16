@@ -31,6 +31,8 @@ private _saveStaticsMode = [missionConfigFile >> "CfgGradPersistence", "saveStat
                 _saveStaticsMode == 2 ||
                 (_x getVariable [QGVAR(isEditorObject),false]) isEqualTo (_saveStaticsMode == 1)
             } &&
+            // exclude grad-fortifications
+            {isNil {_x getVariable "grad_fortifications_fortOwner"}} &&
             {if (_area isEqualType false) then {true} else {_x inArea _area}}
         ) then {
 
@@ -46,7 +48,6 @@ private _saveStaticsMode = [missionConfigFile >> "CfgGradPersistence", "saveStat
         [_thisStaticHash,"posASL",getPosASL _x] call CBA_fnc_hashSet;
         [_thisStaticHash,"vectorDirAndUp",[vectorDir _x, vectorUp _x]] call CBA_fnc_hashSet;
         [_thisStaticHash,"damage",damage _x] call CBA_fnc_hashSet;
-        [_thisStaticHash,"isGradFort",!isNil {_x getVariable "grad_fortifications_fortOwner"}] call CBA_fnc_hashSet;
         [_thisStaticHash,"isGradMoneymenuStorage",_x getVariable ["grad_moneymenu_isStorage",false]] call CBA_fnc_hashSet;
         [_thisStaticHash,"gradMoneymenuOwner",_x getVariable ["grad_moneymenu_owner",objNull]] call CBA_fnc_hashSet;
         [_thisStaticHash,"gradLbmMoney",_x getVariable ["grad_lbm_myFunds",objNull]] call CBA_fnc_hashSet;

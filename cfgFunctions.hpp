@@ -33,6 +33,7 @@ class GRAD_persistence {
         class createVehicleCrew {};
         class loadAllPlayers {};
         class loadContainers {};
+        class loadGradFortificationsStatics {};
         class loadGroups {};
         class loadMarkers {};
         class loadMission {};
@@ -60,6 +61,7 @@ class GRAD_persistence {
         class getInventory {};
         class saveAllPlayers {};
         class saveContainers {};
+        class saveGradFortificationsStatics {};
         class saveGroups {};
         class saveMarkers {};
         class saveMission {};
