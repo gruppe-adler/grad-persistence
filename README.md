@@ -4,7 +4,7 @@ Enables you to save:
 
 * AI units
 * vehicles
-* static objects (including grad-fortifications)
+* static objects (including [grad-fortifications](https://github.com/gruppe-adler/grad-fortifications))
 * containers
 * player equipment, inventory and health
 * player money (needs grad-listBuymenu or grad-moneyMenu)
