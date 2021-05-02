@@ -38,9 +38,17 @@ private _gradFortificationsStatics = (allMissionObjects "Static") select {!isNil
         [_thisGradFortificationsStaticsHash,"gradMoneymenuOwner",_x getVariable ["grad_moneymenu_owner",objNull]] call CBA_fnc_hashSet;
         [_thisGradFortificationsStaticsHash,"gradLbmMoney",_x getVariable ["grad_lbm_myFunds",objNull]] call CBA_fnc_hashSet;
 
-        // discard fortification owner unless type side, because type object or group is lost anyway
         private _fortOwner = _x getVariable ["grad_fortifications_fortOwner",objNull];
-        if (_fortOwner isEqualType sideEmpty) then {_fortOwner = sideEmpty};
+        // save UID instead of object, because object is lost
+        if (_fortOwner isEqualType objNull) then {
+            _fortOwner = getPlayerUID _fortOwner;
+        } else {
+            // discard owner of type group, because group is lost
+            if (_fortOwner isEqualType grpNull) then {
+                _fortOwner = "";
+            };
+            // don't do anything if type side
+        };
         [_thisGradFortificationsStaticsHash,"gradFortificationsOwner",_fortOwner] call CBA_fnc_hashSet;
 
         private _thisGradFortificationsStaticVars = [_allGradFortificationsVariableClasses,_x] call FUNC(saveObjectVars);
