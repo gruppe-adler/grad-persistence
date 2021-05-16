@@ -20,8 +20,12 @@ private _vehiclesData = [_vehiclesTag] call grad_persistence_fnc_getSaveData;
         // editor-placed object that already exists
         private _editorVehicle = call compile _vehVarName;
         if (!isNil "_editorVehicle") then {
-            _thisVehicle = _editorVehicle;
-            _editorVehicleFound = true;
+            if (_editorVehicle isEqualType objNull) then {
+                _thisVehicle = _editorVehicle;
+                _editorVehicleFound = true;
+            } else {
+                ERROR_1("Vehicle varName %1 resolved to %2 (not type OBJECT). Spawning new vehicle instead.", _vehVarName, _editorVehicle);
+            };
         };
     };
 
@@ -30,11 +34,12 @@ private _vehiclesData = [_vehiclesTag] call grad_persistence_fnc_getSaveData;
         _thisVehicle = if (!_hasCrew) then {
             createVehicle [_type, [0,0,0], [], 0, "CAN_COLLIDE"]
         } else {
-            ([[0,0,0],0,_type,_side] call BIS_fnc_spawnVehicle) select 0
+            ([[0,0,0],0,_type,_side] call BIS_fnc_spawnVehicle) param [0, objNull, [objNull]]
         };
 
         if (!isNil "_vehVarName") then {
             [_thisVehicle,_vehVarName] remoteExec ["setVehicleVarName",0,_thisVehicle];
+            missionNamespace setVariable [_vehVarName,_thisVehicle,true];
         };
 
     };
@@ -65,7 +70,7 @@ private _vehiclesData = [_vehiclesTag] call grad_persistence_fnc_getSaveData;
         private _vars = [_thisVehicleHash,"vars"] call CBA_fnc_hashGet;
         [_vars,_thisVehicle] call FUNC(loadObjectVars);
 
-    }, [_thisVehicle,_thisVehicleHash]] call CBA_fnc_waitUntilAndExecute;
+    }, [_thisVehicle,_thisVehicleHash], 10, {ERROR_1("Vehicle nullcheck timeout. Vehiclehash: %1",_this select 1)}] call CBA_fnc_waitUntilAndExecute;
 
 
 } forEach _vehiclesData;
