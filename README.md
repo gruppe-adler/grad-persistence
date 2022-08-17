@@ -1,4 +1,6 @@
-# GRAD Persistence - [WIKI](https://github.com/gruppe-adler/grad-persistence/wiki) for more information
+![grad-persistence-Mighty-Eagle.png](grad-persistence-Mighty-Eagle.png)
+
+# [WIKI](https://github.com/gruppe-adler/grad-persistence/wiki) for more information
 
 Enables you to save:
 
