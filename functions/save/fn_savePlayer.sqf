@@ -90,13 +90,24 @@ if (_savePlayerInventory) then {
 };
 
 if (_savePlayerDamage) then {
-    private _allHitPointsDamage = getAllHitPointsDamage _unit;
-    private _damage = if (count _allHitPointsDamage > 2) then {
-        [_allHitPointsDamage select 0,_allHitPointsDamage select 2]
-    } else {
-        [[],[]]
-    };
-    [_unitDataHash,"damage",_damage] call CBA_fnc_hashSet;
+    if (isClass(configfile >> "CfgPatches" >> "ace_medical")) then {
+
+        private _damage = [_unit] call ace_medical_fnc_serializeState;
+        [_unitDataHash,"damage",_damage] call CBA_fnc_hashSet;
+        diag_log "ACE DETECTED - Saving ACE wounds";
+        diag_log format ["%1", _damage];
+
+    } else 
+            {
+                private _allHitPointsDamage = getAllHitPointsDamage _unit;
+                private _damage = if (count _allHitPointsDamage > 2) then {
+                    [_allHitPointsDamage select 0,_allHitPointsDamage select 2]
+                } else {
+                    [[],[]]
+                };
+                [_unitDataHash,"damage",_damage] call CBA_fnc_hashSet;
+            };
+    
 };
 
 if (_savePlayerPosition) then {
