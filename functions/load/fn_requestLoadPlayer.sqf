@@ -7,10 +7,14 @@ private _onTimeout = {
     ERROR("Player nullcheck timed out.");
 };
 private _fnc = {
-    [{
-        if !(player isKindOf "Man") exitWith {};
+    if !(player isKindOf "Man") exitWith {};
+
+    private _playerWaitConditionLocal = [missionConfigFile >> "CfgGradPersistence", "playerWaitConditionLocal", ""] call BIS_fnc_returnConfigEntry;
+    if (_playerWaitConditionLocal == "") then {_playerWaitConditionLocal = "true"};
+
+    [{call compile _this},{
         [player] remoteExec [QFUNC(loadPlayer),2,false];
-    },[],1] call CBA_fnc_waitAndExecute;
+    },_playerWaitConditionLocal] call CBA_fnc_waitUntilAndExecute;
 };
 
 [_waitCondition,_fnc,[],60,_onTimeout] call CBA_fnc_waitUntilAndExecute;
