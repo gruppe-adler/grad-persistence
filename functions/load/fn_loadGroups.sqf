@@ -27,11 +27,14 @@ private _groupsData = [_groupsTag] call grad_persistence_fnc_getSaveData;
         };
 
         if (!_editorVehicleFound) then {
-            private _type = [_thisUnitHash,"type"] call CBA_fnc_hashGet;
-            _thisUnit = _thisGroup createUnit [_type, [0,0,0], [], 0, "CAN_COLLIDE"];
+            private _type = [_thisUnitHash, "type"] call CBA_fnc_hashGet;
 
-            if (!isNil "_vehVarName") then {
-                [_thisVehicle,_vehVarName] remoteExec ["setVehicleVarName",0,_thisVehicle];
+            _thisUnit = _thisGroup createUnit [_type, [0, 0, 0], [], 0, "CAN_COLLIDE"];
+
+            if (!isNull _thisUnit) then {
+                if (!isNil "_vehVarName") then {
+                    [_thisUnit, _vehVarName] remoteExec ["setVehicleVarName", 0, _thisUnit];
+                };
             };
         };
 
