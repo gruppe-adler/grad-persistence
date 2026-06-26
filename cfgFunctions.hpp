@@ -57,6 +57,7 @@ class GRAD_persistence {
         file = MODULES_DIRECTORY\grad-persistence\functions\save;
 
         class deInstanceTFARRadios {};
+        class deInstanceACRERadios {};
         class getApplicableMarkers {};
         class getInventory {};
         class saveAllPlayers {};
