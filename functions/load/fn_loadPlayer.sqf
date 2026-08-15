@@ -37,12 +37,20 @@ private _fnc_waitUntil = {
     };
 
     if (_savePlayerDamage) then {
-        private _unitHits = [_unitDataHash,"damage"] call CBA_fnc_hashGet;
-        if (!(_unitHits isEqualType false) && {count _unitHits > 0}) then {
-            _unitHits params ["_unitHitNames","_unitHitDamages"];
-            {
-                _unit setHit [_x,_unitHitDamages select _forEachIndex];
-            } forEach _unitHitNames;
+        if (isClass(configfile >> "CfgPatches" >> "ace_medical")) then {
+
+            private _unitHits = [_unitDataHash,"damage"] call CBA_fnc_hashGet;
+            [_unit, _unitHits] call ace_medical_fnc_deserializeState;
+
+            } else {
+
+            private _unitHits = [_unitDataHash,"damage"] call CBA_fnc_hashGet;
+            if (!(_unitHits isEqualType false) && {count _unitHits > 0}) then {
+                _unitHits params ["_unitHitNames","_unitHitDamages"];
+                {
+                    _unit setHit [_x,_unitHitDamages select _forEachIndex];
+                } forEach _unitHitNames;
+            };
         };
     };
 
